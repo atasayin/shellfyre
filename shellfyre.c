@@ -9,6 +9,7 @@
 const char *sysname = "shellfyre";
 
 #define MAX_SIZE 20
+#define PATH_MAX 100
 
 enum return_codes
 {
@@ -27,6 +28,7 @@ struct command_t
 	char *redirects[3];		// in/out redirection
 	struct command_t *next; // for piping
 };
+int save_history();
 
 /**
  * Prints a command struct
@@ -309,7 +311,7 @@ int prompt(struct command_t *command)
 
 	parse_command(buf, command);
 
-	// print_command(command); // DEBUG: uncomment for debugging
+	//print_command(command); // DEBUG: uncomment for debugging
 
 	// restore the old settings
 	tcsetattr(STDIN_FILENO, TCSANOW, &backup_termios);
@@ -356,12 +358,21 @@ int process_command(struct command_t *command)
 		{
 			r = chdir(command->args[0]);
 			if (r == -1)
-				printf("-%s: %s: %s\n", sysname, command->name, strerror(errno));
+				printf("-%s: %s: %s\n", sysname, command->name, strerror(errno));	
 			return SUCCESS;
+		
 		}
 	}
 
 	// TODO: Implement your custom commands here
+
+
+	/* cdh command */
+	if (strcmp(command->name, "cdh") == 0)
+	{
+		
+		
+	}
 
 	pid_t pid = fork();
 
@@ -383,6 +394,7 @@ int process_command(struct command_t *command)
 		/// TODO: do your own exec with path resolving using execv()
     	char path[MAX_SIZE] = "/bin/";	
 		strcat(path,command->name);
+		save_history();
 	
     	if (command->arg_count <= 1){ printf("Invalid input!\n "); return 0; }
       	execv(path, command->args);
@@ -401,4 +413,38 @@ int process_command(struct command_t *command)
 
 	printf("-%s: %s: command not found\n", sysname, command->name);
 	return UNKNOWN;
+}
+
+int save_history(){
+
+	char cwd[PATH_MAX];
+	getcwd(cwd, sizeof(cwd));
+	FILE *file = fopen("history.txt","r+");
+	char ch;
+
+	/* Failed to open */
+	if(file == NULL) { printf("can not open target file\n"); exit(1); }	
+	int counter = 1;
+	while(1)
+	{
+		ch = fgetc(file);
+		if(ch == '\n')
+		{	
+			counter++;
+		}
+		if (counter == 9){
+			counter = 0;
+			fseek(file,0,SEEK_END);
+			fprintf(file,"%d %s\n",counter, cwd);
+		}
+
+		if(ch == EOF) {
+			fprintf(file,"%d %s\n",counter, cwd);
+			break;
+		}
+	}
+	
+	fclose(file);
+	return 0;
+	
 }
