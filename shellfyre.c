@@ -365,33 +365,28 @@ int process_command(struct command_t *command)
 
 	if (strcmp(command->name, "joker") == 0)
 	{
-		char *joke = malloc(sizeof(char) * 512);
+		char *getJoke = malloc(sizeof(char) * 512);
 		char *line = malloc(sizeof(char) * 256);
 		ssize_t nread;
 		size_t len = 0;
 		char *command = malloc(sizeof(char)* 2048); 
-		FILE *file = fopen("joke.txt","w+");
 	
-		if(file == NULL) {return 0;}
-		
+			
 		// Gets the joke from link	
-		system("curl -s https://icanhazdadjoke.com >> joke.txt");
-		strcpy(joke,"$comma ");
-		while ((nread = getline(&line, &len, file)) != -1) {
-               strcat(joke,line);
-           }
-		strcat(joke,"$comma");
+		strcpy(getJoke,"$comma $(curl -s https://icanhazdadjoke.com/)");
+	
+		strcat(getJoke,"$comma");
 		
 		// Complete command
 		strcpy(command,"crontab -l | { comma='\"';cat;echo \"* * * * * XDG_RUNTIME_DIR=/run/user/$(id -u) notify-send ");
-		strcat(command,joke);
+		strcat(command,getJoke);
 		strcat(command," \"; } | crontab -");
 		
 		system(command);
 
-		free(joke);
+		free(getJoke);
 		free(command);
-		remove("joke.txt");
+	
 		return SUCCESS;
 	}
 
