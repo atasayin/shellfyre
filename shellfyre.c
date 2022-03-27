@@ -6,6 +6,7 @@
 #include <string.h>
 #include <stdbool.h>
 #include <errno.h>
+#include <dirent.h>
 const char *sysname = "shellfyre";
 
 #define MAX_SIZE 20
@@ -318,6 +319,67 @@ int prompt(struct command_t *command)
 
 int process_command(struct command_t *command);
 
+void filesearch(char* argument1,char* argument2,char* path){
+	printf("Argument1 %s,argument2 %s, path is %s\n",argument1,argument2,path);
+	DIR *d;
+	DIR *d2;
+	struct dirent *dir;
+	d=opendir(path);
+	if(strcmp(path,".") == 0 || strcmp(path,"..")==0){}
+	else{
+		if(strcmp(argument1,"-o") == 0 ){
+			//open files
+			FILE *fp;
+			char c;
+			while((dir=readdir(d)) != NULL){
+				
+				if(strstr(dir->d_name,argument2)!= NULL){
+					fp=fopen(dir->d_name,"r");
+					while(!feof(fp)) {
+						c=fgetc(fp);
+						printf("%c",c);
+					}
+					printf("\n");
+				}
+			}
+			fclose(fp);
+			
+		}
+		if(strcmp(argument1,"-r") == 0){
+			//recursive search
+			while((dir=readdir(d)) != NULL){
+				if(strcmp(dir->d_name,".")== 0 || strcmp(dir->d_name,"..")== 0 ||strcmp(dir->d_name,".git")== 0 ){}
+				else{
+					if(strstr(dir->d_name,argument2)!= NULL){
+						printf("%s/%s \n",path,dir->d_name);
+					}
+					if((d2=opendir(dir->d_name)) != NULL){
+						filesearch(argument1,argument2,dir->d_name);
+					}
+					closedir(d2);
+				}	
+			}
+			closedir(d);
+		}
+		else{
+			while((dir=readdir(d)) != NULL){
+				if(strstr(dir->d_name,argument1)!= NULL){
+					printf("%s \n",dir->d_name);
+				}
+			}
+			closedir(d);
+		}
+	}
+}
+void take(char* arguments){
+	char *c=strtok(arguments,"/");
+	while(c != NULL){
+		printf("%s \n",c);
+		mkdir(c,0755);
+		chdir(c);
+		c=strtok(NULL,"/");
+	}
+}
 int main()
 {
 	while (1)
@@ -362,6 +424,14 @@ int process_command(struct command_t *command)
 	}
 
 	// TODO: Implement your custom commands here
+	if(strcmp(command->name,"filesearch") == 0){
+		printf("%s %s %s %s\n",command->name,command->args[0],command->args[1],command->args[2]);
+		filesearch(command->args[0],command->args[1],"./");
+	}
+	if(strcmp(command->name,"take") == 0){
+		printf("take %s \n",command->args[0]);
+		take(command->args[0]);
+	}
 
 	pid_t pid = fork();
 
