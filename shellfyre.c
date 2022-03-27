@@ -363,6 +363,32 @@ int process_command(struct command_t *command)
 
 	// TODO: Implement your custom commands here
 
+	if (strcmp(command->name, "joker") == 0)
+	{
+		char *joke = malloc(sizeof(char) * 512);
+		size_t len = 512;
+		char *command = malloc(sizeof(char)* 2048); 
+		FILE *file = fopen("joke.txt","r+");
+		if(file == NULL) {return 0;}
+
+		// Gets the joke from link	
+		system("curl -s https://icanhazdadjoke.com >> joke.txt");
+		getline(&joke,&len,file);
+		
+		// Complete command
+		strcpy(command,"crontab -l | { cat;echo \"*/15 * * * * XDG_RUNTIME_DIR=/run/user/$(id -u) notify-send ");
+		strcat(command,joke);
+		strcat(command,"\"; } | crontab -");
+		
+		system(command);
+
+		free(joke);
+		free(command);
+		remove("joke.txt");
+		return SUCCESS;
+	}
+
+
 	pid_t pid = fork();
 
 	if (pid == 0) // child
