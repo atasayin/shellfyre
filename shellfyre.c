@@ -10,6 +10,7 @@ const char *sysname = "shellfyre";
 
 #define MAX_SIZE 20
 #define PATH_MAX 100
+#define MAX_HISTROY_SIZE 5 
 
 enum return_codes
 {
@@ -28,7 +29,13 @@ struct command_t
 	char *redirects[3];		// in/out redirection
 	struct command_t *next; // for piping
 };
-int save_history();
+
+char **history;
+
+int save_history(int *saveDir);
+int read_history_file(int*,int);
+int write_history_file(int*);
+int print_history();
 
 /**
  * Prints a command struct
@@ -366,18 +373,35 @@ int process_command(struct command_t *command)
 
 	// TODO: Implement your custom commands here
 
-
-	/* cdh command */
-	if (strcmp(command->name, "cdh") == 0)
-	{
-		
-		
-	}
+	// Save history for cdh command 
+	history = (char**) malloc(MAX_HISTROY_SIZE * sizeof(char*));  
+	int *saveDir = (int*) malloc(sizeof(int*));
+	save_history(saveDir);
 
 	pid_t pid = fork();
 
 	if (pid == 0) // child
 	{
+		/* cdh command */
+		if (strcmp(command->name, "cdh") == 0)
+		{
+			char dirLetter;
+			int letterIndex;
+			print_history(saveDir);
+			printf("Select directory by letter: ");
+			scanf("%c",&dirLetter);
+
+			letterIndex = dirLetter - 'a';
+			// cd command 
+			r = chdir(history[letterIndex]);
+			if (r == -1)
+				printf("-%s: %s: %s\n", sysname, command->name, strerror(errno));	
+			return SUCCESS;
+
+		}
+		free(history);
+		free(saveDir);
+
 		// increase args size by 2
 		command->args = (char **)realloc(
 			command->args, sizeof(char *) * (command->arg_count += 2));
@@ -394,8 +418,7 @@ int process_command(struct command_t *command)
 		/// TODO: do your own exec with path resolving using execv()
     	char path[MAX_SIZE] = "/bin/";	
 		strcat(path,command->name);
-		save_history();
-	
+		
     	if (command->arg_count <= 1){ printf("Invalid input!\n "); return 0; }
       	execv(path, command->args);
       	exit(0);
@@ -408,6 +431,7 @@ int process_command(struct command_t *command)
 		if (!command->background){ 
 			wait(NULL);
 		}
+		
 		return SUCCESS;
 	}
 
@@ -415,36 +439,120 @@ int process_command(struct command_t *command)
 	return UNKNOWN;
 }
 
-int save_history(){
 
-	char cwd[PATH_MAX];
-	getcwd(cwd, sizeof(cwd));
-	FILE *file = fopen("history.txt","r+");
-	char ch;
+/* Helper Functions */
 
-	/* Failed to open */
-	if(file == NULL) { printf("can not open target file\n"); exit(1); }	
-	int counter = 1;
-	while(1)
-	{
-		ch = fgetc(file);
-		if(ch == '\n')
-		{	
-			counter++;
-		}
-		if (counter == 9){
-			counter = 0;
-			fseek(file,0,SEEK_END);
-			fprintf(file,"%d %s\n",counter, cwd);
-		}
+/**
+ * Gets the current history file 
+ * and modify it again
+ * @param  saveDir  [description]
+ * @return          [description]
+ */
+int save_history(int *saveDir){
 
-		if(ch == EOF) {
-			fprintf(file,"%d %s\n",counter, cwd);
-			break;
+	char currentDic[PATH_MAX];
+	getcwd(currentDic, sizeof(currentDic));
+	 
+	/* Read history file and get # of saved dirs */
+	if (!read_history_file(saveDir,0)){
+		return 0;
+	}
+
+	/* Add current dic to history variable */
+	if (*saveDir == MAX_HISTROY_SIZE ){
+		// History is full
+		for(int i = 0; i < *saveDir - 1; i++){
+			strcpy(history[i],history[i + 1]);
 		}
+		strcpy(history[*saveDir-1],currentDic);
+		
+	}else{
+		// History is not full
+		history[*saveDir] = (char*) malloc((PATH_MAX) * sizeof(char)); 
+	  	strcpy(history[*saveDir],currentDic);
+		(*saveDir)++;
+	}
+
+	if (!write_history_file(saveDir)){
+		printf("Failed to write History file\n");
+		return 0;
 	}
 	
-	fclose(file);
 	return 0;
 	
+}
+
+/**
+ * Reads the file and save it to 
+ * history variable
+ * and modify it again
+ * @param  saveDir    [description]
+ * @param  isCreated  [description]
+ * @return            [description]
+ */
+int read_history_file(int *saveDir,int isCreated){
+
+	FILE *file_read = fopen("./shellfyre/history.txt","r");
+	char *line = (char*)malloc(PATH_MAX * sizeof(char*));  
+
+	if(file_read == NULL) { 
+		// creates history file
+		FILE *file_write = fopen("./shellfyre/history.txt","w");
+		fclose(file_write);
+		return 0; 
+	}	 
+  
+	while(1)
+   	{
+		fscanf(file_read, "%s", line);
+		if (!isCreated){
+	  		history[*saveDir] =(char*) malloc((PATH_MAX) * sizeof(char));
+		}
+	  	strcpy(history[*saveDir],line);
+	  	(*saveDir)++;
+
+		if(feof(file_read)) break; 
+   	}
+	fclose(file_read);
+	free(line);
+
+	return 1;
+
+}
+/**
+ * Writes to a file from history
+ * variable
+ * @param  saveDir    [description]
+ * @return            [description]
+ */
+int write_history_file(int *saveDir){
+
+	FILE *file_write = fopen("./shellfyre/history.txt","w");
+
+	if(file_write == NULL) { return 0; }	 
+  
+	for(int i = 0; i < *saveDir - 1; i++)
+   	{
+		fprintf(file_write, "%s\n", history[i]);
+   	}
+	fprintf(file_write, "%s", history[*saveDir - 1]);
+	fclose(file_write);
+	
+	return 1;
+}
+/**
+ * Prints the history 
+ * @param  saveDir    [description]
+ * @return            [description]
+ */
+int print_history(int *saveDir){
+	
+	char charNumber = 'a';
+
+	for(int i = 0; i < *saveDir; i++){
+		printf("%c)  %s\n",charNumber+i,history[i]);
+	}
+	
+	return 1;
+
 }
