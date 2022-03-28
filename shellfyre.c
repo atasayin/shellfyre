@@ -492,7 +492,7 @@ int save_history(int *saveDir){
  */
 int read_history_file(int *saveDir,int isCreated){
 
-	FILE *file_read = fopen("./shellfyre/history.txt","r");
+	FILE *file_read = fopen("~/shellfyre/history.txt","r");
 	char *line = (char*)malloc(PATH_MAX * sizeof(char*));  
 
 	if(file_read == NULL) { 
