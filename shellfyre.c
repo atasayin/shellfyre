@@ -366,22 +366,17 @@ int process_command(struct command_t *command)
 	if (strcmp(command->name, "joker") == 0)
 	{
 		char *getJoke = malloc(sizeof(char) * 512);
-		char *line = malloc(sizeof(char) * 256);
-		ssize_t nread;
-		size_t len = 0;
 		char *command = malloc(sizeof(char)* 2048); 
 	
 			
-		// Gets the joke from link	
+		// String gets the joke from link	
 		strcpy(getJoke,"\"$(curl -s https://icanhazdadjoke.com/)\"");
-	
-		//strcat(getJoke,"$comma");
 		
 		// Complete command
 		strcpy(command,"crontab -l | { cat;echo \'* * * * * XDG_RUNTIME_DIR=/run/user/$(id -u) notify-send ");
 		strcat(command,getJoke);
 		strcat(command," \'; } | crontab -");
-		printf("%s",command);
+		
 		system(command);
 
 		free(getJoke);
