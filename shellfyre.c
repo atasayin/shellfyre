@@ -368,8 +368,8 @@ int process_command(struct command_t *command)
 
 	if (strcmp(command->name, "au") == 0)
 	{
-		char **text = malloc(sizeof(char*) * 100);
-		char *temp = malloc(sizeof(char*) * 200);
+		char **text = malloc(sizeof(char*) * 200);
+		
 		int totalLine = 0;
 		set_random_automata(text,&totalLine);
 		printf("%d",totalLine);
@@ -381,6 +381,7 @@ int process_command(struct command_t *command)
 		int btWaitSkip = 0;
 
 		for (int i = 0; i< totalLine -1;i++){
+			char *temp = malloc(sizeof(char) * 200);
 			int len = strlen(text[i]);
 			isBtwait = 0;
 			btWaitSkip = 0;
@@ -399,7 +400,7 @@ int process_command(struct command_t *command)
 
 			// Waiting
 			if (strncmp(text[i]+len - 11,"<bt_wait>",8) == 0){
-				usleep(200000);
+				//usleep(200000);
 				isBtwait = 1;
 				btWaitSkip = len - 11;
 			}
@@ -451,13 +452,13 @@ int process_command(struct command_t *command)
 				
 			}
 			
-			
+			free(temp); 
 		}
 		printf("\n");
 
 
 		free(text); 
-		free(temp); 
+		
 	}
 
 	pid_t pid = fork();
@@ -506,8 +507,8 @@ int set_random_automata(char **automata, int *totalLine){
 	//char *path = malloc(sizeof(char*) * 100);
 	//strcpy(path,"/automata/automata_");
 
-	FILE *file_read = fopen("M1030_S0310_N_eng.txt","r");
-	char *line = (char*)malloc(1000 * sizeof(char*));  
+	FILE *file_read = fopen("M1070_S0040_N_eng.txt","r");
+	char *line = (char*)malloc(200 * sizeof(char));  
 
 	if(file_read == NULL) { 
 		printf("Failed to read file\n");
