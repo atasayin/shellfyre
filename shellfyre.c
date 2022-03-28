@@ -367,13 +367,12 @@ int process_command(struct command_t *command)
 	{
 		char *getJoke = malloc(sizeof(char) * 512);
 		char *command = malloc(sizeof(char)* 2048); 
-	
-			
+
 		// String gets the joke from link	
-		strcpy(getJoke,"\"$(curl -s https://icanhazdadjoke.com/)\"");
+		strcpy(getJoke,"\"a dad:\" \"$(curl -s https://icanhazdadjoke.com/)\"");
 		
 		// Complete command
-		strcpy(command,"crontab -l | { cat;echo \'* * * * * XDG_RUNTIME_DIR=/run/user/$(id -u) notify-send ");
+		strcpy(command,"crontab -l | { cat;echo \'15 * * * * XDG_RUNTIME_DIR=/run/user/$(id -u) notify-send ");
 		strcat(command,getJoke);
 		strcat(command," \'; } | crontab -");
 		
