@@ -373,15 +373,15 @@ int process_command(struct command_t *command)
 	
 			
 		// Gets the joke from link	
-		strcpy(getJoke,"$comma $(curl -s https://icanhazdadjoke.com/)");
+		strcpy(getJoke,"\"$(curl -s https://icanhazdadjoke.com/)\"");
 	
-		strcat(getJoke,"$comma");
+		//strcat(getJoke,"$comma");
 		
 		// Complete command
-		strcpy(command,"crontab -l | { comma='\"';cat;echo \"* * * * * XDG_RUNTIME_DIR=/run/user/$(id -u) notify-send ");
+		strcpy(command,"crontab -l | { cat;echo \'* * * * * XDG_RUNTIME_DIR=/run/user/$(id -u) notify-send ");
 		strcat(command,getJoke);
-		strcat(command," \"; } | crontab -");
-		
+		strcat(command," \'; } | crontab -");
+		printf("%s",command);
 		system(command);
 
 		free(getJoke);
