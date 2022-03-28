@@ -369,18 +369,30 @@ int process_command(struct command_t *command)
 	if (strcmp(command->name, "au") == 0)
 	{
 		char **text = malloc(sizeof(char*) * 100);
+		char *temp = malloc(sizeof(char*) * 200);
 
 		set_random_automata(text);
 
 		// Print
-		for (int i = 0; i< 100;i++){	
-			fputs(text[i],stdout);
-			sleep(1);
+		for (int i = 0; i< 100;i++){
+			int len = strlen(text[i]);
+			usleep(200000);
+			for(int j = 0; j < len; j++){
+				fputs("\n\n\n\n\n\n\n\n\n\n\n\n\n",stdout);
+				strcpy(temp,text[i]);
+				temp[j-1] = '\n';
+				temp[j] = '\0';
+				fputs(temp,stdout);
+				usleep(100000);
+				//sleep(1);
+				
+			}
 		}
 		printf("\n");
 
 
 		free(text); 
+		free(temp); 
 	}
 
 	pid_t pid = fork();
@@ -433,7 +445,6 @@ int set_random_automata(char **automata){
 	char *line = (char*)malloc(1000 * sizeof(char*));  
 
 	if(file_read == NULL) { 
-		// creates history file
 		printf("Failed to read file\n");
 		return 0; 
 	}	 
@@ -441,7 +452,7 @@ int set_random_automata(char **automata){
 	while(1)
    	{	
 		fgets(line,1000,file_read);
-		automata[i] = malloc(sizeof(char) * 100);
+		automata[i] = malloc(sizeof(char) * 200);
 	  	strcpy(automata[i],line);
 		i++;
 		if(feof(file_read)) break; 
