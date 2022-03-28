@@ -29,7 +29,7 @@ struct command_t
 	struct command_t *next; // for piping
 };
 
-int set_random_automata(char **);
+int set_random_automata(char **,int*);
 
 /**
  * Prints a command struct
@@ -370,71 +370,83 @@ int process_command(struct command_t *command)
 	{
 		char **text = malloc(sizeof(char*) * 100);
 		char *temp = malloc(sizeof(char*) * 200);
-
-		set_random_automata(text);
-
+		int totalLine = 0;
+		set_random_automata(text,&totalLine);
+		printf("%d",totalLine);
+		
 		// Print
-		for (int i = 0; i< 100;i++){
-			int len = strlen(text[i]);
-			int pageStart = 0;
-			int pageEnd = 0;
-			int isBtwait = 0;
-			int btWaitSkip = 0;
+		int pageStart = 0;
+		int line1Back = 0;
+		int isBtwait = 0;
+		int btWaitSkip = 0;
 
+		for (int i = 0; i< totalLine -1;i++){
+			int len = strlen(text[i]);
+			isBtwait = 0;
+			btWaitSkip = 0;
+			
+			//new page
 			if (strncmp(text[i], "<page>",6) == 0){
-				fputs("\n\n\n\n\n\n\n\n\n\n\n\n\n",stdout); //new page
+				fputs("\n\n\n\n\n\n\n\n\n\n\n\n\n",stdout); 
 				pageStart = i;
+				fputs("NEW PAGE",stdout); 
 				continue;	
 			}
+			// End page
 			if (strncmp(text[i], "</page>",6) == 0){
-				fputs("page",stdout);
-				pageStart = 0;
+				pageStart = i;
 			}
+
+			// Waiting
 			if (strncmp(text[i]+len - 11,"<bt_wait>",8) == 0){
 				usleep(200000);
 				isBtwait = 1;
 				btWaitSkip = len - 11;
 			}
-			usleep(200000);
-			/*
-			fputs(text[i],stdout);
-			fputs(text[i]+len - 11,stdout);
+			//usleep(200000);
 
-			char a[10];
-			sprintf(a, "%d", len);
-
-			fputs(a,stdout);
-			*/
-			
-			pageEnd = i;
+			line1Back = i - 1;
 			for(int j = 0; j < len; j++){
+				
+				// btwaits
 				if (isBtwait && j == btWaitSkip+2){
-					sleep(1); // btwaits
+					//sleep(1); 
 					break;
 				}
 				
-				// animation
+				/* Animation */
 				fputs("\n\n\n\n\n\n\n\n\n\n\n\n\n",stdout);
-				/*
-				for(int line = pageStart; line < pageEnd; line++){
-					if (strncmp(text[i], "<page>",6) == 0){
-						continue;	
+
+				// Prints text[pageStart,...,line1Back]
+				for(int line = pageStart; line <= line1Back; line++){
+					//char a[10];
+					//sprintf(a,"%d",pageStart);
+					//fputs(a,stdout);
+					if (strncmp(text[line]+strlen(text[line]) - 11,"<bt_wait>",8) == 0){
+						char *tempWait = malloc(sizeof(char) * 200);
+						strcpy(tempWait,text[line]);
+						tempWait[strlen(text[line]) - 11] = '\0';
+						fputs(tempWait,stdout);
+						fputs("\n",stdout);
+						free(tempWait);
+					}else{
+						if (strncmp(text[line], "<page>",6) == 0){
+							continue;	
+						}
+						if (strncmp(text[line], "</page>",6) == 0){
+							continue;
+						}
+						fputs(text[line],stdout);
 					}
-					if (strncmp(text[i], "</page>",6) == 0){
-						continue;
-					}
-					if (strncmp(text[i]+len - 11,"<bt_wait>",8) == 0){
-						
-					}
-					fputs(text[line],stdout);
 
 				}
-				*/
+				
+				// Prints char by char
 				strcpy(temp,text[i]);
 				temp[j-1] = '\n'; 
 				temp[j] = '\0';
 				fputs(temp,stdout);
-				usleep(20000);
+				//usleep(20000);
 				//sleep(1);
 				
 			}
@@ -488,26 +500,26 @@ int process_command(struct command_t *command)
 	return UNKNOWN;
 }
 
-int set_random_automata(char **automata){
+int set_random_automata(char **automata, int *totalLine){
 
 	int r = rand() % FILE_NUMBER ;  
 	//char *path = malloc(sizeof(char*) * 100);
 	//strcpy(path,"/automata/automata_");
 
-	FILE *file_read = fopen("M1070_S0040_N_eng.txt","r");
+	FILE *file_read = fopen("M1030_S0310_N_eng.txt","r");
 	char *line = (char*)malloc(1000 * sizeof(char*));  
 
 	if(file_read == NULL) { 
 		printf("Failed to read file\n");
 		return 0; 
 	}	 
-  	int i = 0;
+  	*totalLine = 0;
 	while(1)
    	{	
 		fgets(line,1000,file_read);
-		automata[i] = malloc(sizeof(char) * 200);
-	  	strcpy(automata[i],line);
-		i++;
+		automata[*totalLine] = malloc(sizeof(char) * 200);
+	  	strcpy(automata[*totalLine],line);
+		(*totalLine)++;
 		if(feof(file_read)) break; 
    	}
 
