@@ -363,6 +363,17 @@ int process_command(struct command_t *command)
 
 	// TODO: Implement your custom commands here
 
+	if (strcmp(command->name, "au") == 0)
+	{
+		char *text = malloc(sizeof(char*) * 10000);
+		strcpy(text,"Look at me. Oh please look at me. I want your eyes to look upon me alone.<bt_wait>");
+		for(int i = 0; i < strlen(text);i++){
+			printf("%c",text[i]);
+			sleep(1);
+		}
+		free(text); 
+	}
+
 	pid_t pid = fork();
 
 	if (pid == 0) // child
