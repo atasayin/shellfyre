@@ -9,6 +9,7 @@
 const char *sysname = "shellfyre";
 
 #define MAX_SIZE 20
+#define FILE_NUMBER 10
 
 enum return_codes
 {
@@ -27,6 +28,8 @@ struct command_t
 	char *redirects[3];		// in/out redirection
 	struct command_t *next; // for piping
 };
+
+int set_random_automata(char **);
 
 /**
  * Prints a command struct
@@ -365,12 +368,18 @@ int process_command(struct command_t *command)
 
 	if (strcmp(command->name, "au") == 0)
 	{
-		char *text = malloc(sizeof(char*) * 10000);
-		strcpy(text,"Look at me. Oh please look at me. I want your eyes to look upon me alone.<bt_wait>");
-		for(int i = 0; i < strlen(text);i++){
-			printf("%c",text[i]);
+		char **text = malloc(sizeof(char*) * 100);
+
+		set_random_automata(text);
+
+		// Print
+		for (int i = 0; i< 100;i++){	
+			fputs(text[i],stdout);
 			sleep(1);
 		}
+		printf("\n");
+
+
 		free(text); 
 	}
 
@@ -412,4 +421,36 @@ int process_command(struct command_t *command)
 
 	printf("-%s: %s: command not found\n", sysname, command->name);
 	return UNKNOWN;
+}
+
+int set_random_automata(char **automata){
+
+	int r = rand() % FILE_NUMBER ;  
+	//char *path = malloc(sizeof(char*) * 100);
+	//strcpy(path,"/automata/automata_");
+
+	FILE *file_read = fopen("bin_us.txt-001.txt","r");
+	char *line = (char*)malloc(1000 * sizeof(char*));  
+
+	if(file_read == NULL) { 
+		// creates history file
+		printf("Failed to read file\n");
+		return 0; 
+	}	 
+  	int i = 0;
+	while(1)
+   	{	
+		fgets(line,1000,file_read);
+		automata[i] = malloc(sizeof(char) * 100);
+	  	strcpy(automata[i],line);
+		i++;
+		if(feof(file_read)) break; 
+   	}
+
+	fclose(file_read);
+	free(line);
+	//free(path);
+
+	return 1;
+
 }
