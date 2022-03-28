@@ -369,7 +369,7 @@ int process_command(struct command_t *command)
 	if (strcmp(command->name, "au") == 0)
 	{
 		char **text = malloc(sizeof(char*) * 200);
-		
+		char *temp = malloc(sizeof(char) * 200);
 		int totalLine = 0;
 		set_random_automata(text,&totalLine);
 		printf("%d",totalLine);
@@ -381,7 +381,7 @@ int process_command(struct command_t *command)
 		int btWaitSkip = 0;
 
 		for (int i = 0; i< totalLine -1;i++){
-			char *temp = malloc(sizeof(char) * 200);
+			
 			int len = strlen(text[i]);
 			isBtwait = 0;
 			btWaitSkip = 0;
@@ -394,8 +394,9 @@ int process_command(struct command_t *command)
 				continue;	
 			}
 			// End page
-			if (strncmp(text[i], "</page>",6) == 0){
+			if (strncmp(text[i], "</page>",7) == 0){
 				pageStart = i;
+				continue;	
 			}
 
 			// Waiting
@@ -452,11 +453,11 @@ int process_command(struct command_t *command)
 				
 			}
 			
-			free(temp); 
+			
 		}
 		printf("\n");
 
-
+		free(temp); 
 		free(text); 
 		
 	}
