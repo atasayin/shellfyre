@@ -369,7 +369,7 @@ int process_command(struct command_t *command)
 	if (strcmp(command->name, "au") == 0)
 	{
 		char **text = malloc(sizeof(char*) * 200);
-		char *temp = malloc(sizeof(char) * 200);
+		char *temp =  malloc(sizeof(char*) * 200);
 		int totalLine = 0;
 		set_random_automata(text,&totalLine);
 		printf("%d",totalLine);
@@ -381,6 +381,7 @@ int process_command(struct command_t *command)
 		int btWaitSkip = 0;
 
 		for (int i = 0; i< totalLine -1;i++){
+			temp = realloc(temp,sizeof(char) * 200);
 			
 			int len = strlen(text[i]);
 			isBtwait = 0;
@@ -390,7 +391,6 @@ int process_command(struct command_t *command)
 			if (strncmp(text[i], "<page>",6) == 0){
 				fputs("\n\n\n\n\n\n\n\n\n\n\n\n\n",stdout); 
 				pageStart = i;
-				fputs("NEW PAGE",stdout); 
 				continue;	
 			}
 			// End page
@@ -405,7 +405,7 @@ int process_command(struct command_t *command)
 				isBtwait = 1;
 				btWaitSkip = len - 11;
 			}
-			//usleep(200000);
+			//usleep(200000); // new line
 
 			line1Back = i - 1;
 			for(int j = 0; j < len; j++){
