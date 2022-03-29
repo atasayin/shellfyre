@@ -369,7 +369,7 @@ int process_command(struct command_t *command)
 	if (strcmp(command->name, "au") == 0)
 	{
 		char **text = malloc(sizeof(char*) * 200);
-		char *temp =  malloc(sizeof(char*) * 200);
+		char *temp =  malloc(sizeof(char) * 200);
 		int totalLine = 0;
 		set_random_automata(text,&totalLine);
 		printf("%d",totalLine);
