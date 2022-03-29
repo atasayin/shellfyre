@@ -369,10 +369,9 @@ int process_command(struct command_t *command)
 	if (strcmp(command->name, "au") == 0)
 	{
 		char **text = malloc(sizeof(char*) * 200);
-		char *temp =  malloc(sizeof(char) * 200);
+		//char *temp =  malloc(sizeof(char) * 200);
 		int totalLine = 0;
 		set_random_automata(text,&totalLine);
-		printf("%d",totalLine);
 		
 		// Print
 		int pageStart = 0;
@@ -381,7 +380,7 @@ int process_command(struct command_t *command)
 		int btWaitSkip = 0;
 
 		for (int i = 0; i< totalLine -1;i++){
-			temp = realloc(temp,sizeof(char) * 200);
+			//temp = realloc(temp,sizeof(char) * 200);
 			
 			int len = strlen(text[i]);
 			isBtwait = 0;
@@ -425,12 +424,12 @@ int process_command(struct command_t *command)
 					//sprintf(a,"%d",pageStart);
 					//fputs(a,stdout);
 					if (strncmp(text[line]+strlen(text[line]) - 11,"<bt_wait>",8) == 0){
-						char *tempWait = malloc(sizeof(char) * 200);
-						strcpy(tempWait,text[line]);
-						tempWait[strlen(text[line]) - 11] = '\0';
-						fputs(tempWait,stdout);
-						fputs("\n",stdout);
-						free(tempWait);
+						//char *tempWait = malloc(sizeof(char) * 200);
+						//strcpy(tempWait,text[line]);
+						//tempWait[strlen(text[line]) - 11] = '\0';
+						//fputs(tempWait,stdout);
+						//fputs("\n",stdout);
+						//free(tempWait);
 					}else{
 						if (strncmp(text[line], "<page>",6) == 0){
 							continue;	
@@ -444,12 +443,12 @@ int process_command(struct command_t *command)
 				}
 				
 				// Prints char by char
-				strcpy(temp,text[i]);
-				temp[j-1] = '\n'; 
-				temp[j] = '\0';
-				fputs(temp,stdout);
+				//strcpy(temp,text[i]);
+				//temp[j-1] = '\n'; 
+				//temp[j] = '\0';
+				//fputs(temp,stdout);
 				//usleep(20000);
-				//sleep(1);
+				
 				
 			}
 			
@@ -457,7 +456,7 @@ int process_command(struct command_t *command)
 		}
 		printf("\n");
 
-		free(temp); 
+		//free(temp); 
 		free(text); 
 		
 	}
