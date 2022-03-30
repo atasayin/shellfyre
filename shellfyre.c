@@ -387,7 +387,7 @@ int process_command(struct command_t *command)
 			
 			//new page
 			if (strncmp(text[i], "<page>",6) == 0){
-				fputs("\n\n\n\n\n\n\n\n\n\n\n\n\n",stdout); 
+				fputs("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n",stdout);
 				pageStart = i;
 				continue;	
 			}
