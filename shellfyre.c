@@ -366,13 +366,13 @@ int process_command(struct command_t *command)
 
 	// TODO: Implement your custom commands here
 
-	if (strcmp(command->name, "au") == 0)
+	if (strcmp(command->name, "automata") == 0)
 	{
 		char **text = malloc(sizeof(char*) * 200);
 		char temp[200];
 		int totalLine = 0;
 		set_random_automata(text,&totalLine);
-		return 0;
+		
 		// Print
 		int pageStart = 0;
 		int line1Back = 0;
@@ -415,12 +415,6 @@ int process_command(struct command_t *command)
 			for(int j = 1; j < len; j++){
 				
 				// btwaits
-				/*
-				if (isBtwait && j == btWaitSkip+2){
-					//sleep(1); 
-					break;
-				}
-				*/
 				if (index != -1 && j == index + 11){
 					sleep(1); 
 				}
@@ -463,7 +457,6 @@ int process_command(struct command_t *command)
 		}
 		printf("\n");
 
-		//free(temp); 
 		free(text); 
 		
 	}
@@ -519,7 +512,6 @@ int set_random_automata(char **automata, int *totalLine){
 	strcat(path,r_str);
 	strcat(path,".txt");
 	
-	
 	FILE *file_read = fopen(path,"r");
 	char *line = (char*)malloc(200 * sizeof(char));  
 
@@ -539,7 +531,6 @@ int set_random_automata(char **automata, int *totalLine){
 
 	fclose(file_read);
 	free(line);
-	//free(path);
 
 	return 1;
 
