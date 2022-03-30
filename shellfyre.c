@@ -380,6 +380,22 @@ void take(char* arguments){
 		c=strtok(NULL,"/");
 	}
 }
+void factors(int number){
+	int i=2,oldi=i;
+	printf("factors of %d are: \n",number);
+	while(i<=number){
+		if(number % i==0){
+			printf(" %d",i);
+			number=number/i;
+			i=oldi;
+		}else{
+			oldi=i;
+			i++;
+		}
+	}
+	printf("\n");
+	
+}
 int main()
 {
 	while (1)
@@ -431,6 +447,9 @@ int process_command(struct command_t *command)
 	if(strcmp(command->name,"take") == 0){
 		printf("take %s \n",command->args[0]);
 		take(command->args[0]);
+	}
+	if(strcmp(command->name,"factors")== 0){
+		factors(atoi(command->args[0]));
 	}
 
 	pid_t pid = fork();
