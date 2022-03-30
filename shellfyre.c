@@ -441,15 +441,15 @@ int process_command(struct command_t *command)
 					}
 
 				}
-				/*
+				
 				// Prints char by char
 				strcpy(temp,text[i]);
-				temp[j-1] = '\n'; 
-				temp[j] = '\0';
+				//temp[j-1] = '\n'; 
+				//temp[j] = '\0';
 				fputs(temp,stdout);
 				//usleep(10000);
 				
-				*/
+				
 			}
 			
 			
