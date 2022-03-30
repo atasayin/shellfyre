@@ -449,7 +449,7 @@ int process_command(struct command_t *command)
  * @return          [description]
  */
 int save_history(int *saveDir){
-
+	printf("save beg\n");
 	char currentDic[PATH_MAX];
 	getcwd(currentDic, sizeof(currentDic));
 	 
@@ -468,16 +468,17 @@ int save_history(int *saveDir){
 		
 	}else{
 		// History is not full
+		(*saveDir)++;
 		history[*saveDir] = (char*) malloc((PATH_MAX) * sizeof(char)); 
 	  	strcpy(history[*saveDir],currentDic);
-		(*saveDir)++;
+		
 	}
 
 	if (!write_history_file(saveDir)){
 		printf("Failed to write History file\n");
 		return 0;
 	}
-	
+	printf("save end\n");
 	return 0;
 	
 }
@@ -491,7 +492,7 @@ int save_history(int *saveDir){
  * @return            [description]
  */
 int read_history_file(int *saveDir,int isCreated){
-
+	printf("Read beg\n");
 	FILE *file_read = fopen("history.txt","r");
 	char *line = (char*)malloc(PATH_MAX * sizeof(char*));  
 
@@ -516,7 +517,7 @@ int read_history_file(int *saveDir,int isCreated){
    	}
 	fclose(file_read);
 	free(line);
-
+	printf("Read end\n");
 	return 1;
 
 }
@@ -527,6 +528,7 @@ int read_history_file(int *saveDir,int isCreated){
  * @return            [description]
  */
 int write_history_file(int *saveDir){
+	printf("write beg\n");
 
 	FILE *file_write = fopen("history.txt","w");
 
@@ -538,7 +540,7 @@ int write_history_file(int *saveDir){
    	}
 	fprintf(file_write, "%s\n", history[*saveDir - 1]);
 	fclose(file_write);
-	
+	printf("write end\n");
 	return 1;
 }
 /**
