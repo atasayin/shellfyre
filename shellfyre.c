@@ -457,7 +457,7 @@ int save_history(int *saveDir){
 	if (!read_history_file(saveDir,0)){
 		return 0;
 	}
-	
+	printf("savedir %d\n",*saveDir);
 	// Add current dic to history variable 
 	if (*saveDir == MAX_HISTROY_SIZE ){
 		// History is full
