@@ -9,7 +9,7 @@
 const char *sysname = "shellfyre";
 
 #define MAX_SIZE 20
-#define FILE_NUMBER 10
+#define FILE_NUMBER 22
 
 enum return_codes
 {
@@ -372,7 +372,7 @@ int process_command(struct command_t *command)
 		char temp[200];
 		int totalLine = 0;
 		set_random_automata(text,&totalLine);
-		
+		return 0;
 		// Print
 		int pageStart = 0;
 		int line1Back = 0;
@@ -510,11 +510,17 @@ int process_command(struct command_t *command)
 
 int set_random_automata(char **automata, int *totalLine){
 
-	int r = rand() % FILE_NUMBER ;  
-	//char *path = malloc(sizeof(char*) * 100);
-	//strcpy(path,"/automata/automata_");
+	int r_int = rand() % FILE_NUMBER;  
+	char r_str[3];
+	sprintf(r_str, "%d", r_int);
 
-	FILE *file_read = fopen("M1030_S0310_N_eng.txt","r");
+	char *path = malloc(sizeof(char*) * 100);
+	strcpy(path,"automata/automata_");
+	strcat(path,r_str);
+	strcat(path,".txt");
+	
+	
+	FILE *file_read = fopen(path,"r");
 	char *line = (char*)malloc(200 * sizeof(char));  
 
 	if(file_read == NULL) { 
