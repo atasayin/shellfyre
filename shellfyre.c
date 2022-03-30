@@ -504,7 +504,7 @@ int read_history_file(int *saveDir,int isCreated){
   
 	while(1)
    	{
-		fscanf(file_read, "%s", line);
+		fgets(line,PATH_MAX,file_read);
 		printf("%s\n",line);
 		
 		history[*saveDir] =(char*) malloc((PATH_MAX) * sizeof(char));
