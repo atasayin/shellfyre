@@ -398,20 +398,31 @@ int process_command(struct command_t *command)
 			}
 
 			// Waiting
+			char *wait = strstr(text[i],"<bt_wait>");
+			int index = -1;
+			if (wait != NULL){
+				index = wait - text[i];
+				
+			}
 			if (strncmp(text[i]+len - 11,"<bt_wait>",8) == 0){
 				//usleep(200000);
 				isBtwait = 1;
 				btWaitSkip = len - 11;
 			}
-			//usleep(200000); // new line
+			usleep(200000); // new line
 
 			line1Back = i - 1;
 			for(int j = 1; j < len; j++){
 				
 				// btwaits
+				/*
 				if (isBtwait && j == btWaitSkip+2){
 					//sleep(1); 
 					break;
+				}
+				*/
+				if (index != -1 && j == index + 11){
+					sleep(1); 
 				}
 				
 				// Animation //
@@ -419,9 +430,6 @@ int process_command(struct command_t *command)
 				
 				// Prints text[pageStart,...,line1Back]
 				for(int line = pageStart; line <= line1Back; line++){
-					//char a[10];
-					//sprintf(a,"%d",pageStart);
-					//fputs(a,stdout);
 					
 					if (strncmp(text[line]+strlen(text[line]) - 11,"<bt_wait>",8) == 0){
 						char tempWait[200];
@@ -447,9 +455,8 @@ int process_command(struct command_t *command)
 					temp[j-1] = '\n'; 
 					temp[j] = '\0';
 					fputs(temp,stdout);
-					usleep(10000);
-				
-				
+					usleep(60000);
+						
 			}
 			
 			
@@ -507,7 +514,7 @@ int set_random_automata(char **automata, int *totalLine){
 	//char *path = malloc(sizeof(char*) * 100);
 	//strcpy(path,"/automata/automata_");
 
-	FILE *file_read = fopen("M1070_S0040_N_eng.txt","r");
+	FILE *file_read = fopen("M1030_S0310_N_eng.txt","r");
 	char *line = (char*)malloc(200 * sizeof(char));  
 
 	if(file_read == NULL) { 
