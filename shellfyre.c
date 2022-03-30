@@ -504,6 +504,7 @@ int read_history_file(int *saveDir,int isCreated){
   
 	while(1)
    	{
+		if(feof(file_read)) break; 
 		fgets(line,PATH_MAX,file_read);
 		printf("%s\n",line);
 		
@@ -512,7 +513,7 @@ int read_history_file(int *saveDir,int isCreated){
 	  	strcpy(history[*saveDir],line);
 	  	(*saveDir)++;
 
-		if(feof(file_read)) break; 
+		
    	}
 	fclose(file_read);
 	free(line);
