@@ -406,7 +406,7 @@ int process_command(struct command_t *command)
 			//usleep(200000); // new line
 
 			line1Back = i - 1;
-			for(int j = 0; j < len; j++){
+			for(int j = 1; j < len; j++){
 				
 				// btwaits
 				if (isBtwait && j == btWaitSkip+2){
@@ -442,12 +442,12 @@ int process_command(struct command_t *command)
 
 				}
 				
-				// Prints char by char
-				strcpy(temp,text[i]);
-				//temp[j-1] = '\n'; 
-				//temp[j] = '\0';
-				fputs(temp,stdout);
-				//usleep(10000);
+					// Prints char by char
+					strcpy(temp,text[i]);
+					temp[j-1] = '\n'; 
+					temp[j] = '\0';
+					fputs(temp,stdout);
+					usleep(10000);
 				
 				
 			}
