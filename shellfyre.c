@@ -378,7 +378,7 @@ int process_command(struct command_t *command)
 		int line1Back = 0;
 		int isBtwait = 0;
 		int btWaitSkip = 0;
-		/*
+		
 		for (int i = 0; i< totalLine -1;i++){
 			
 			int len = strlen(text[i]);
@@ -416,7 +416,7 @@ int process_command(struct command_t *command)
 				
 				// Animation //
 				fputs("\n\n\n\n\n\n\n\n\n\n\n\n\n",stdout);
-
+				
 				// Prints text[pageStart,...,line1Back]
 				for(int line = pageStart; line <= line1Back; line++){
 					//char a[10];
@@ -441,7 +441,7 @@ int process_command(struct command_t *command)
 					}
 
 				}
-				
+				/*
 				// Prints char by char
 				strcpy(temp,text[i]);
 				temp[j-1] = '\n'; 
@@ -449,11 +449,11 @@ int process_command(struct command_t *command)
 				fputs(temp,stdout);
 				//usleep(10000);
 				
-				
+				*/
 			}
 			
 			
-		}*/
+		}
 		printf("\n");
 
 		//free(temp); 
