@@ -457,7 +457,7 @@ int save_history(int *saveDir){
 	if (!read_history_file(saveDir,0)){
 		return 0;
 	}
-	/*
+	
 	// Add current dic to history variable 
 	if (*saveDir == MAX_HISTROY_SIZE ){
 		// History is full
@@ -477,7 +477,7 @@ int save_history(int *saveDir){
 		printf("Failed to write History file\n");
 		return 0;
 	}
-	*/
+	
 	return 0;
 	
 }
@@ -507,13 +507,11 @@ int read_history_file(int *saveDir,int isCreated){
 		
 		fgets(line,PATH_MAX,file_read);
 		if(feof(file_read)) break; 
-		printf("%s\n",line);
 		
+		// Save to variable history from file and get # el
 		history[*saveDir] =(char*) malloc((PATH_MAX) * sizeof(char));
-		
 	  	strcpy(history[*saveDir],line);
 	  	(*saveDir)++;
-
 		
    	}
 	fclose(file_read);
@@ -536,9 +534,9 @@ int write_history_file(int *saveDir){
   
 	for(int i = 0; i < *saveDir - 1; i++)
    	{
-		fprintf(file_write, "%s\n", history[i]);
+		fprintf(file_write, "%s", history[i]);
    	}
-	fprintf(file_write, "%s", history[*saveDir - 1]);
+	fprintf(file_write, "%s\n", history[*saveDir - 1]);
 	fclose(file_write);
 	
 	return 1;
