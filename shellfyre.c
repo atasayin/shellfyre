@@ -492,12 +492,12 @@ int save_history(int *saveDir){
  */
 int read_history_file(int *saveDir,int isCreated){
 
-	FILE *file_read = fopen("~/shellfyre/history.txt","r");
+	FILE *file_read = fopen("history.txt","r");
 	char *line = (char*)malloc(PATH_MAX * sizeof(char*));  
 
 	if(file_read == NULL) { 
 		// creates history file
-		FILE *file_write = fopen("./shellfyre/history.txt","w");
+		FILE *file_write = fopen("history.txt","w");
 		fclose(file_write);
 		return 0; 
 	}	 
@@ -505,9 +505,10 @@ int read_history_file(int *saveDir,int isCreated){
 	while(1)
    	{
 		fscanf(file_read, "%s", line);
-		if (!isCreated){
-	  		history[*saveDir] =(char*) malloc((PATH_MAX) * sizeof(char));
-		}
+		printf("%s\n",line);
+		
+		history[*saveDir] =(char*) malloc((PATH_MAX) * sizeof(char));
+		
 	  	strcpy(history[*saveDir],line);
 	  	(*saveDir)++;
 
@@ -527,7 +528,7 @@ int read_history_file(int *saveDir,int isCreated){
  */
 int write_history_file(int *saveDir){
 
-	FILE *file_write = fopen("./shellfyre/history.txt","w");
+	FILE *file_write = fopen("history.txt","w");
 
 	if(file_write == NULL) { return 0; }	 
   
