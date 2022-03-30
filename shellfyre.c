@@ -453,12 +453,12 @@ int save_history(int *saveDir){
 	char currentDic[PATH_MAX];
 	getcwd(currentDic, sizeof(currentDic));
 	 
-	/* Read history file and get # of saved dirs */
+	// Read history file and get # of saved dirs 
 	if (!read_history_file(saveDir,0)){
 		return 0;
 	}
-
-	/* Add current dic to history variable */
+	/*
+	// Add current dic to history variable 
 	if (*saveDir == MAX_HISTROY_SIZE ){
 		// History is full
 		for(int i = 0; i < *saveDir - 1; i++){
@@ -477,7 +477,7 @@ int save_history(int *saveDir){
 		printf("Failed to write History file\n");
 		return 0;
 	}
-	
+	*/
 	return 0;
 	
 }
