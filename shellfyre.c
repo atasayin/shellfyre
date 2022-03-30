@@ -335,10 +335,7 @@ void filesearch(char* argument1,char* argument2,char* path){
 				
 				if(strstr(dir->d_name,argument2)!= NULL){
 					fp=fopen(dir->d_name,"r");
-					while(!feof(fp)) {
-						c=fgetc(fp);
-						printf("%c",c);
-					}
+					
 					printf("\n");
 				}
 			}
