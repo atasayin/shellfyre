@@ -420,7 +420,7 @@ int process_command(struct command_t *command)
 				}
 				
 				// Animation //
-				fputs("\n\n\n\n\n\n\n\n\n\n\n\n\n",stdout);
+				fputs("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n",stdout);
 				
 				// Prints text[pageStart,...,line1Back]
 				for(int line = pageStart; line <= line1Back; line++){
