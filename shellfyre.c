@@ -463,6 +463,7 @@ int process_command(struct command_t *command)
 		strcat(path,command->name);
 		
     	if (command->arg_count <= 1){ printf("Invalid input!\n "); return 0; }
+		
       	execv(path, command->args);
       	exit(0);
 
