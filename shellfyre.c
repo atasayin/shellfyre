@@ -362,6 +362,7 @@ int process_command(struct command_t *command)
 	if (strcmp(command->name, "a") == 0){
 		char path[40];
 		strcpy(path,getenv("HOME"));
+		printf("%s\n",path);
 		return SUCCESS;
 	}
 	if (strcmp(command->name, "cd") == 0)
