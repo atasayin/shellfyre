@@ -30,12 +30,13 @@ struct command_t
 	struct command_t *next; // for piping
 };
 
-char **history;
+char history[MAX_HISTROY_SIZE][256];
+int saveDir = 0;
 
-int save_history(int *saveDir);
-int read_history_file(int*,int);
+int save_history();
+int read_history_file();
 int write_history_file(int*);
-int print_history();
+int print_history(int);
 
 /**
  * Prints a command struct
@@ -373,10 +374,8 @@ int process_command(struct command_t *command)
 
 	// TODO: Implement your custom commands here
 
-	// Save history for cdh command 
-	history = (char**) malloc(MAX_HISTROY_SIZE * sizeof(char*));  
-	int *saveDir = (int*) malloc(sizeof(int*));
-	save_history(saveDir);
+	// Save history for cdh command
+	save_history();
 
 	pid_t pid = fork();
 
@@ -399,8 +398,7 @@ int process_command(struct command_t *command)
 			return SUCCESS;
 
 		}
-		free(history);
-		free(saveDir);
+		
 
 		// increase args size by 2
 		command->args = (char **)realloc(
@@ -448,8 +446,8 @@ int process_command(struct command_t *command)
  * @param  saveDir  [description]
  * @return          [description]
  */
-int save_history(int *saveDir){
-	printf("save beg\n");
+int save_history(){
+
 	char currentDic[PATH_MAX];
 	getcwd(currentDic, sizeof(currentDic));
 	 
@@ -457,6 +455,7 @@ int save_history(int *saveDir){
 	if (!read_history_file(saveDir,0)){
 		return 0;
 	}
+	/*
 	printf("savedir %d\n",*saveDir);
 	// Add current dic to history variable 
 	if (*saveDir == MAX_HISTROY_SIZE ){
@@ -478,6 +477,7 @@ int save_history(int *saveDir){
 		printf("Failed to write History file\n");
 		return 0;
 	}
+	*/
 	printf("save end\n");
 	return 0;
 	
@@ -491,7 +491,7 @@ int save_history(int *saveDir){
  * @param  isCreated  [description]
  * @return            [description]
  */
-int read_history_file(int *saveDir,int isCreated){
+int read_history_file(){
 	printf("Read beg\n");
 	FILE *file_read = fopen("history.txt","r");
 	char *line = (char*)malloc(PATH_MAX * sizeof(char*));  
@@ -505,19 +505,16 @@ int read_history_file(int *saveDir,int isCreated){
   
 	while(1)
    	{
-		
 		fgets(line,PATH_MAX,file_read);
 		if(feof(file_read)) break; 
-		
 		// Save to variable history from file and get # el
-		history[*saveDir] =(char*) malloc((PATH_MAX) * sizeof(char));
-	  	strcpy(history[*saveDir],line);
-	  	(*saveDir)++;
-		
+	  	strcpy(history[saveDir],line);
+	  	saveDir++;		
    	}
 	fclose(file_read);
 	free(line);
 	printf("Read end\n");
+	print_history(saveDir);
 	return 1;
 
 }
@@ -548,11 +545,11 @@ int write_history_file(int *saveDir){
  * @param  saveDir    [description]
  * @return            [description]
  */
-int print_history(int *saveDir){
+int print_history(int saveDir){
 	
 	char charNumber = 'a';
 
-	for(int i = 0; i < *saveDir; i++){
+	for(int i = 0; i < saveDir; i++){
 		printf("%c)  %s\n",charNumber+i,history[i]);
 	}
 	
