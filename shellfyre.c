@@ -359,7 +359,11 @@ int process_command(struct command_t *command)
 
 	if (strcmp(command->name, "exit") == 0)
 		return EXIT;
-
+	if (strcmp(command->name, "a") == 0){
+		char path[40];
+		strcpy(path,getenv("HOME"));
+		return SUCCESS;
+	}
 	if (strcmp(command->name, "cd") == 0)
 	{
 		if (command->arg_count > 0)
