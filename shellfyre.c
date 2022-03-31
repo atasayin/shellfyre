@@ -35,7 +35,7 @@ int saveDir;
 
 int save_history();
 int read_history_file();
-int write_history_file(int*);
+int write_history_file();
 int print_history();
 
 /**
@@ -453,9 +453,10 @@ int save_history(){
 	getcwd(currentDic, sizeof(currentDic));
 	 
 	// Read history file and get # of saved dirs 
-	if (!read_history_file(saveDir,0)){
-		return 0;
+	if (!read_history_file()){
+		printf("cdh: History file created\n");
 	}
+	printf("%d After Read\n",saveDir);
 	print_history();
 	// Add current dic to history variable 
 	if (saveDir >= MAX_HISTROY_SIZE ){
@@ -466,23 +467,19 @@ int save_history(){
 		}
 		strcpy(history[saveDir-1],currentDic);
 		
-		
 	}else{
 		// History is not full
-		saveDir++;
 	  	strcpy(history[saveDir],currentDic);
-		
+		saveDir++;
 	}
-	if (saveDir >= MAX_HISTROY_SIZE)
-		//return 0;
-	
+	printf("\n%d After Modify\n",saveDir);
 	print_history();
-	/*
-	if (!write_history_file(saveDir)){
+	
+	if (!write_history_file()){
 		printf("Failed to write History file\n");
 		return 0;
 	}
-	*/
+	
 	printf("save end\n");
 	return 0;
 	
@@ -497,8 +494,7 @@ int save_history(){
  * @return            [description]
  */
 int read_history_file(){
-	
-	printf("Read beg\n");
+		
 	FILE *file_read = fopen("history.txt","r");
 	char line[PATH_MAX];
 
@@ -512,17 +508,16 @@ int read_history_file(){
 	while(1)
    	{
 		fgets(line,PATH_MAX,file_read);
-		if(feof(file_read)) break; 
+		if(feof(file_read)) break; 	
 		// Save to variable history from file and get # el
 	  	strcpy(history[saveDir],line);
-	  	saveDir++;		
+	  	saveDir++;	
+		
+		
    	}
 	fclose(file_read);
 	
-	printf("Read end\n");
-	
 	return 1;
-
 }
 /**
  * Writes to a file from history
@@ -530,18 +525,18 @@ int read_history_file(){
  * @param  saveDir    [description]
  * @return            [description]
  */
-int write_history_file(int *saveDir){
-	printf("write beg\n");
+int write_history_file(){
+	printf("\nwrite beg\n");
 
 	FILE *file_write = fopen("history.txt","w");
 
 	if(file_write == NULL) { return 0; }	 
   
-	for(int i = 0; i < *saveDir - 1; i++)
+	for(int i = 0; i < saveDir -1; i++)
    	{
 		fprintf(file_write, "%s", history[i]);
    	}
-	fprintf(file_write, "%s\n", history[*saveDir - 1]);
+	fprintf(file_write, "%s\n", history[saveDir - 1]);
 	fclose(file_write);
 	printf("write end\n");
 	return 1;
