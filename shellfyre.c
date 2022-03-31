@@ -30,13 +30,13 @@ struct command_t
 	struct command_t *next; // for piping
 };
 
-char history[MAX_HISTROY_SIZE][256];
+char history[MAX_HISTROY_SIZE + 1][256];
 int saveDir;
 
 int save_history();
 int read_history_file();
 int write_history_file(int*);
-int print_history(int);
+int print_history();
 
 /**
  * Prints a command struct
@@ -447,6 +447,7 @@ int process_command(struct command_t *command)
  * @return          [description]
  */
 int save_history(){
+	saveDir = 0;
 
 	char currentDic[PATH_MAX];
 	getcwd(currentDic, sizeof(currentDic));
@@ -455,25 +456,28 @@ int save_history(){
 	if (!read_history_file(saveDir,0)){
 		return 0;
 	}
-	
-	
-	/*
+	print_history();
 	// Add current dic to history variable 
-	if (*saveDir == MAX_HISTROY_SIZE ){
+	if (saveDir >= MAX_HISTROY_SIZE ){
 		// History is full
-		for(int i = 0; i < *saveDir - 1; i++){
+		printf("full\n");
+		for(int i = 0; i < saveDir - 1; i++){
 			strcpy(history[i],history[i + 1]);
 		}
-		strcpy(history[*saveDir-1],currentDic);
+		strcpy(history[saveDir-1],currentDic);
+		
 		
 	}else{
 		// History is not full
-		(*saveDir)++;
-		history[*saveDir] = (char*) malloc((PATH_MAX) * sizeof(char)); 
-	  	strcpy(history[*saveDir],currentDic);
+		saveDir++;
+	  	strcpy(history[saveDir],currentDic);
 		
 	}
-
+	if (saveDir >= MAX_HISTROY_SIZE)
+		//return 0;
+	
+	print_history();
+	/*
 	if (!write_history_file(saveDir)){
 		printf("Failed to write History file\n");
 		return 0;
@@ -493,7 +497,7 @@ int save_history(){
  * @return            [description]
  */
 int read_history_file(){
-	saveDir = 0;
+	
 	printf("Read beg\n");
 	FILE *file_read = fopen("history.txt","r");
 	char line[PATH_MAX];
@@ -516,7 +520,6 @@ int read_history_file(){
 	fclose(file_read);
 	
 	printf("Read end\n");
-	print_history(saveDir);
 	
 	return 1;
 
@@ -548,10 +551,10 @@ int write_history_file(int *saveDir){
  * @param  saveDir    [description]
  * @return            [description]
  */
-int print_history(int saveDir){
+int print_history(){
 	
 	char charNumber = 'a';
-
+	
 	for(int i = 0; i < saveDir; i++){
 		printf("%c)  %s",charNumber+i,history[i]);
 	}
