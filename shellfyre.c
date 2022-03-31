@@ -31,7 +31,7 @@ struct command_t
 };
 
 char history[MAX_HISTROY_SIZE][256];
-int saveDir = 0;
+int saveDir;
 
 int save_history();
 int read_history_file();
@@ -455,8 +455,9 @@ int save_history(){
 	if (!read_history_file(saveDir,0)){
 		return 0;
 	}
+	
+	
 	/*
-	printf("savedir %d\n",*saveDir);
 	// Add current dic to history variable 
 	if (*saveDir == MAX_HISTROY_SIZE ){
 		// History is full
@@ -492,9 +493,10 @@ int save_history(){
  * @return            [description]
  */
 int read_history_file(){
+	saveDir = 0;
 	printf("Read beg\n");
 	FILE *file_read = fopen("history.txt","r");
-	char *line = (char*)malloc(PATH_MAX * sizeof(char*));  
+	char line[PATH_MAX];
 
 	if(file_read == NULL) { 
 		// creates history file
@@ -512,9 +514,10 @@ int read_history_file(){
 	  	saveDir++;		
    	}
 	fclose(file_read);
-	free(line);
+	
 	printf("Read end\n");
 	print_history(saveDir);
+	
 	return 1;
 
 }
@@ -550,7 +553,7 @@ int print_history(int saveDir){
 	char charNumber = 'a';
 
 	for(int i = 0; i < saveDir; i++){
-		printf("%c)  %s\n",charNumber+i,history[i]);
+		printf("%c)  %s",charNumber+i,history[i]);
 	}
 	
 	return 1;
