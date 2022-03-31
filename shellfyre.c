@@ -16,8 +16,6 @@ const char *sysname = "shellfyre";
 #define MAX_SIZE 20
 #define PATH_MAX 100
 #define MAX_HISTROY_SIZE 10
-#define READ_END 0
-#define WRITE_END 1
 
 
 enum return_codes
@@ -38,13 +36,14 @@ struct command_t
 	struct command_t *next; // for piping
 };
 
-const int SIZE = 4096;
+// cdh global variables
+const int SIZE = 32;
 const char *name = "OS";
-
 char history[MAX_HISTROY_SIZE + 1][256];
 char history_path[256];
 int saveDir;
 
+// cdh helper functions
 int save_history();
 int read_history_file();
 int write_history_file();
@@ -343,7 +342,7 @@ int process_command(struct command_t *command);
 
 int main()
 {
-	
+	// Gets the HOME path to save cdh_history.txt file
 	initialize_history_path();
 	while (1)
 	{
@@ -399,13 +398,13 @@ int process_command(struct command_t *command)
 		int shm_fd;
 		void *ptr;
 
-		/* create the shared memory segment */
+		// create the shared memory segment 
 		shm_fd = shm_open(name, O_CREAT | O_RDWR, 0666);
 
-		/* configure the size of the shared memory segment */
+		// configure the size of the shared memory segment 
 		ftruncate(shm_fd,SIZE);
 
-		/* now map the shared memory segment in the address space of the process */
+		// now map the shared memory segment in the address space of the process 
 		ptr = mmap(0,SIZE, PROT_READ | PROT_WRITE, MAP_SHARED, shm_fd, 0);
 		if (ptr == MAP_FAILED) {
 			printf("Map failed\n");
@@ -437,8 +436,8 @@ int process_command(struct command_t *command)
 
 				// Removes history file with first argument 'remove'
 				if (strcmp(command->args[0],"-r") == 0){
-				remove(history_path);
-				printf("cdh: History file removed\n");
+					remove(history_path);
+					printf("cdh: History file removed\n");
 				return SUCCESS;
 			}
 
@@ -446,7 +445,6 @@ int process_command(struct command_t *command)
 		
 		}
 		
-
 		// increase args size by 2
 		command->args = (char **)realloc(
 			command->args, sizeof(char *) * (command->arg_count += 2));
@@ -479,16 +477,15 @@ int process_command(struct command_t *command)
 		
 			int shm_fd;
 			void *ptr;
-			
-
-			/* open the shared memory segment */
+		
+			// open the shared memory segment 
 			shm_fd = shm_open(name, O_RDONLY, 0666);
 			if (shm_fd == -1) {
 				printf("shared memory failed\n");
 				exit(-1);
 			}
 
-			/* now map the shared memory segment in the address space of the process */
+			// now map the shared memory segment in the address space of the process 
 			ptr = mmap(0,SIZE, PROT_READ, MAP_SHARED, shm_fd, 0);
 			if (ptr == MAP_FAILED) {
 				printf("Map failed\n");
@@ -502,7 +499,9 @@ int process_command(struct command_t *command)
 
 				char goPath[200];
 				strcpy(goPath,history[letterIndex]);
-				goPath[strlen(goPath) - 1] = '\0';
+				
+				if (saveDir -1 !=letterIndex)
+					goPath[strlen(goPath) - 1] = '\0';
 
 				// cd command 
 				r = chdir(goPath);
@@ -522,10 +521,9 @@ int process_command(struct command_t *command)
 /* Helper Functions */
 
 /**
- * Gets the current history file 
- * and modify it again
- * @param  saveDir  [description]
- * @return          [description]
+ * Main 'cdh' command function which reads, modifies and writes
+ * the recent directories
+ * @return          [success]
  */
 int save_history(){
 	saveDir = 0;
@@ -562,12 +560,8 @@ int save_history(){
 }
 
 /**
- * Reads the file and save it to 
- * history variable
- * and modify it again
- * @param  saveDir    [description]
- * @param  isCreated  [description]
- * @return            [description]
+ * Reads from HOME/cdh_history.txt and save it to history variable
+ * @return            [success]
  */
 int read_history_file(){
 		
@@ -594,10 +588,8 @@ int read_history_file(){
 	return 1;
 }
 /**
- * Writes to a file from history
- * variable
- * @param  saveDir    [description]
- * @return            [description]
+ * Writes to HOME/cdh_history.txt from history variable
+ * @return            [success]
  */
 int write_history_file(){
 	
@@ -616,8 +608,7 @@ int write_history_file(){
 }
 /**
  * Prints the history 
- * @param  saveDir    [description]
- * @return            [description]
+ * @return            [success]
  */
 int print_history(){
 	
@@ -631,6 +622,9 @@ int print_history(){
 
 }
 
+/**
+ * Finds and saves the HOME path
+ */
 void initialize_history_path(){
 	strcpy(history_path,getenv("HOME"));
 	strcat(history_path,"/cdh_history.txt");
