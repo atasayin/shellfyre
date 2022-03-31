@@ -10,7 +10,7 @@ const char *sysname = "shellfyre";
 
 #define MAX_SIZE 20
 #define PATH_MAX 100
-#define MAX_HISTROY_SIZE 5 
+#define MAX_HISTROY_SIZE 10
 
 enum return_codes
 {
@@ -456,8 +456,7 @@ int save_history(){
 	if (!read_history_file()){
 		printf("cdh: History file created\n");
 	}
-	printf("%d After Read\n",saveDir);
-	print_history();
+	
 	// Add current dic to history variable 
 	if (saveDir >= MAX_HISTROY_SIZE ){
 		// History is full
@@ -472,15 +471,12 @@ int save_history(){
 	  	strcpy(history[saveDir],currentDic);
 		saveDir++;
 	}
-	printf("\n%d After Modify\n",saveDir);
-	print_history();
 	
 	if (!write_history_file()){
 		printf("Failed to write History file\n");
 		return 0;
 	}
 	
-	printf("save end\n");
 	return 0;
 	
 }
@@ -512,8 +508,6 @@ int read_history_file(){
 		// Save to variable history from file and get # el
 	  	strcpy(history[saveDir],line);
 	  	saveDir++;	
-		
-		
    	}
 	fclose(file_read);
 	
@@ -526,8 +520,7 @@ int read_history_file(){
  * @return            [description]
  */
 int write_history_file(){
-	printf("\nwrite beg\n");
-
+	
 	FILE *file_write = fopen("history.txt","w");
 
 	if(file_write == NULL) { return 0; }	 
@@ -538,7 +531,7 @@ int write_history_file(){
    	}
 	fprintf(file_write, "%s\n", history[saveDir - 1]);
 	fclose(file_write);
-	printf("write end\n");
+	
 	return 1;
 }
 /**
@@ -553,7 +546,7 @@ int print_history(){
 	for(int i = 0; i < saveDir; i++){
 		printf("%c)  %s",charNumber+i,history[i]);
 	}
-	
+	printf("\n");
 	return 1;
 
 }
