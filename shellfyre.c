@@ -6,11 +6,19 @@
 #include <string.h>
 #include <stdbool.h>
 #include <errno.h>
+
+#include <fcntl.h>
+#include <sys/shm.h>
+#include <sys/stat.h>
+#include <sys/mman.h>
 const char *sysname = "shellfyre";
 
 #define MAX_SIZE 20
 #define PATH_MAX 100
 #define MAX_HISTROY_SIZE 10
+#define READ_END 0
+#define WRITE_END 1
+
 
 enum return_codes
 {
@@ -30,13 +38,18 @@ struct command_t
 	struct command_t *next; // for piping
 };
 
+const int SIZE = 4096;
+const char *name = "OS";
+
 char history[MAX_HISTROY_SIZE + 1][256];
+char history_path[256];
 int saveDir;
 
 int save_history();
 int read_history_file();
 int write_history_file();
 int print_history();
+void initialize_history_path();
 
 /**
  * Prints a command struct
@@ -330,6 +343,8 @@ int process_command(struct command_t *command);
 
 int main()
 {
+	
+	initialize_history_path();
 	while (1)
 	{
 		struct command_t *command = malloc(sizeof(struct command_t));
@@ -359,12 +374,7 @@ int process_command(struct command_t *command)
 
 	if (strcmp(command->name, "exit") == 0)
 		return EXIT;
-	if (strcmp(command->name, "a") == 0){
-		char path[40];
-		strcpy(path,getenv("HOME"));
-		printf("%s\n",path);
-		return SUCCESS;
-	}
+	
 	if (strcmp(command->name, "cd") == 0)
 	{
 		if (command->arg_count > 0)
@@ -383,25 +393,57 @@ int process_command(struct command_t *command)
 	save_history();
 
 	pid_t pid = fork();
-
+	
 	if (pid == 0) // child
-	{
+	{	
+		int shm_fd;
+		void *ptr;
+
+		/* create the shared memory segment */
+		shm_fd = shm_open(name, O_CREAT | O_RDWR, 0666);
+
+		/* configure the size of the shared memory segment */
+		ftruncate(shm_fd,SIZE);
+
+		/* now map the shared memory segment in the address space of the process */
+		ptr = mmap(0,SIZE, PROT_READ | PROT_WRITE, MAP_SHARED, shm_fd, 0);
+		if (ptr == MAP_FAILED) {
+			printf("Map failed\n");
+			return -1;
+		}
+
+		// Checks if cdh is called
+		sprintf(ptr,"%d",-1);
+
 		/* cdh command */
 		if (strcmp(command->name, "cdh") == 0)
-		{
-			char dirLetter;
-			int letterIndex;
-			print_history(saveDir);
-			printf("Select directory by letter: ");
-			scanf("%c",&dirLetter);
+		{	
+			// No arg cdh 
+			if (command->arg_count == 0){
+				char dirLetter;
+				int letterIndex;
+				print_history(saveDir);
+				printf("Select directory by letter: ");
+				scanf("%c",&dirLetter);
 
-			letterIndex = dirLetter - 'a';
-			// cd command 
-			r = chdir(history[letterIndex]);
-			if (r == -1)
-				printf("-%s: %s: %s\n", sysname, command->name, strerror(errno));	
-			return SUCCESS;
+				letterIndex = dirLetter - 'a';
 
+				// Writes the index of wanted dir to shared memory
+				sprintf(ptr,"%d",letterIndex);
+				
+				return SUCCESS;
+
+			}else{
+
+				// Removes history file with first argument 'remove'
+				if (strcmp(command->args[0],"-r") == 0){
+				remove(history_path);
+				printf("cdh: History file removed\n");
+				return SUCCESS;
+			}
+
+			}
+		
 		}
 		
 
@@ -433,6 +475,40 @@ int process_command(struct command_t *command)
 		
 		if (!command->background){ 
 			wait(NULL);
+			int read_cdh;
+		
+			int shm_fd;
+			void *ptr;
+			
+
+			/* open the shared memory segment */
+			shm_fd = shm_open(name, O_RDONLY, 0666);
+			if (shm_fd == -1) {
+				printf("shared memory failed\n");
+				exit(-1);
+			}
+
+			/* now map the shared memory segment in the address space of the process */
+			ptr = mmap(0,SIZE, PROT_READ, MAP_SHARED, shm_fd, 0);
+			if (ptr == MAP_FAILED) {
+				printf("Map failed\n");
+				exit(-1);
+			}
+			read_cdh = atoi(ptr);
+
+			// Go to wanted dir by cd command
+			if (read_cdh != -1){
+				int letterIndex = read_cdh;
+
+				char goPath[200];
+				strcpy(goPath,history[letterIndex]);
+				goPath[strlen(goPath) - 1] = '\0';
+
+				// cd command 
+				r = chdir(goPath);
+				if (r == -1)
+					printf("-%s: %s: %s\n", sysname, command->name, strerror(errno));	
+			}
 		}
 		
 		return SUCCESS;
@@ -465,7 +541,6 @@ int save_history(){
 	// Add current dic to history variable 
 	if (saveDir >= MAX_HISTROY_SIZE ){
 		// History is full
-		printf("full\n");
 		for(int i = 0; i < saveDir - 1; i++){
 			strcpy(history[i],history[i + 1]);
 		}
@@ -496,12 +571,12 @@ int save_history(){
  */
 int read_history_file(){
 		
-	FILE *file_read = fopen("history.txt","r");
+	FILE *file_read = fopen(history_path,"r");
 	char line[PATH_MAX];
 
 	if(file_read == NULL) { 
 		// creates history file
-		FILE *file_write = fopen("history.txt","w");
+		FILE *file_write = fopen(history_path,"w");
 		fclose(file_write);
 		return 0; 
 	}	 
@@ -526,7 +601,7 @@ int read_history_file(){
  */
 int write_history_file(){
 	
-	FILE *file_write = fopen("history.txt","w");
+	FILE *file_write = fopen(history_path,"w");
 
 	if(file_write == NULL) { return 0; }	 
   
@@ -554,4 +629,9 @@ int print_history(){
 	printf("\n");
 	return 1;
 
+}
+
+void initialize_history_path(){
+	strcpy(history_path,getenv("HOME"));
+	strcat(history_path,"/cdh_history.txt");
 }
