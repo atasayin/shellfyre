@@ -329,18 +329,13 @@ void filesearch(char* argument1,char* argument2,char* path){
 	else{
 		if(strcmp(argument1,"-o") == 0 ){
 			//open files
-			FILE *fp;
-			char c;
 			while((dir=readdir(d)) != NULL){
-				
 				if(strstr(dir->d_name,argument2)!= NULL){
-					fp=fopen(dir->d_name,"r");
-					
+					char* temp[]={"xdg-open",dir->d_name,NULL};
+					execvp("xdg-open",temp);
 					printf("\n");
 				}
 			}
-			fclose(fp);
-			
 		}
 		if(strcmp(argument1,"-r") == 0){
 			//recursive search
