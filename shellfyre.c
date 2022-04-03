@@ -369,6 +369,9 @@ int main()
 
 int process_command(struct command_t *command)
 {
+	// Save history for cdh command
+	save_history();
+
 	int r;
 	if (strcmp(command->name, "") == 0)
 		return SUCCESS;
@@ -390,6 +393,7 @@ int process_command(struct command_t *command)
 
 	// TODO: Implement your custom commands here
 
+	// joker command
 	if (strcmp(command->name, "joker") == 0)
 	{
 		char *getJoke = malloc(sizeof(char) * 512);
@@ -411,8 +415,7 @@ int process_command(struct command_t *command)
 		return SUCCESS;
 	}
 
-	// Save history for cdh command
-	save_history();
+	// automata command
 	if (strcmp(command->name, "automata") == 0)
 	{
 		char **text = malloc(sizeof(char*) * 200);
@@ -754,6 +757,10 @@ void initialize_history_path(){
 	strcat(history_path,"/cdh_history.txt");
 }
 
+/**
+ * Selects random automata file from the dir and reads it 
+ * to automata variable
+ */
 int set_random_automata(char **automata, int *totalLine){
 
 	int r_int = rand() % FILE_NUMBER;  
