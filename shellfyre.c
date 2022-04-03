@@ -50,6 +50,8 @@ int read_history_file();
 int write_history_file();
 int print_history();
 void initialize_history_path();
+
+// automata helper function
 int set_random_automata(char **,int*);
 
 /**
