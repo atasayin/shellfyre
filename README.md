@@ -37,10 +37,10 @@ shellfyre$ joker
 ```
 ## Awesome Commands
 
-### factor
+### factors
 
 ```bash
-shellfyre$ factor
+shellfyre$ factors
 ```
 
 ### automata
