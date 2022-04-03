@@ -7,9 +7,18 @@
 #include <stdbool.h>
 #include <errno.h>
 #include <dirent.h>
+#include <fcntl.h>
+#include <sys/shm.h>
+#include <sys/stat.h>
+#include <sys/mman.h>
+
 const char *sysname = "shellfyre";
 
 #define MAX_SIZE 20
+#define PATH_MAX 100
+#define MAX_HISTROY_SIZE 10
+
+#define FILE_NUMBER 22
 
 enum return_codes
 {
@@ -28,6 +37,23 @@ struct command_t
 	char *redirects[3];		// in/out redirection
 	struct command_t *next; // for piping
 };
+
+// cdh global variables
+const int SIZE = 32;
+const char *name = "OS";
+char history[MAX_HISTROY_SIZE + 1][256];
+char history_path[256];
+int saveDir;
+
+// cdh helper functions
+int save_history();
+int read_history_file();
+int write_history_file();
+int print_history();
+void initialize_history_path();
+
+// automata helper function
+int set_random_automata(char **,int*);
 
 /**
  * Prints a command struct
@@ -310,7 +336,7 @@ int prompt(struct command_t *command)
 
 	parse_command(buf, command);
 
-	// print_command(command); // DEBUG: uncomment for debugging
+	//print_command(command); // DEBUG: uncomment for debugging
 
 	// restore the old settings
 	tcsetattr(STDIN_FILENO, TCSANOW, &backup_termios);
@@ -390,6 +416,8 @@ void factors(int number){
 }
 int main()
 {
+	// Gets the HOME path to save cdh_history.txt file
+	initialize_history_path();
 	while (1)
 	{
 		struct command_t *command = malloc(sizeof(struct command_t));
@@ -413,21 +441,25 @@ int main()
 
 int process_command(struct command_t *command)
 {
+	// Save history for cdh command
+	save_history();
+
 	int r;
 	if (strcmp(command->name, "") == 0)
 		return SUCCESS;
 
 	if (strcmp(command->name, "exit") == 0)
 		return EXIT;
-
+	
 	if (strcmp(command->name, "cd") == 0)
 	{
 		if (command->arg_count > 0)
 		{
 			r = chdir(command->args[0]);
 			if (r == -1)
-				printf("-%s: %s: %s\n", sysname, command->name, strerror(errno));
+				printf("-%s: %s: %s\n", sysname, command->name, strerror(errno));	
 			return SUCCESS;
+		
 		}
 	}
 
@@ -444,10 +476,178 @@ int process_command(struct command_t *command)
 		factors(atoi(command->args[0]));
 	}
 
-	pid_t pid = fork();
-
-	if (pid == 0) // child
+	// joker command
+	if (strcmp(command->name, "joker") == 0)
 	{
+		char *getJoke = malloc(sizeof(char) * 512);
+		char *command = malloc(sizeof(char)* 2048); 
+
+		// String gets the joke from link	
+		strcpy(getJoke,"\"a dad:\" \"$(curl -s https://icanhazdadjoke.com/)\"");
+		
+		// Complete command
+		strcpy(command,"crontab -l | { cat;echo \'15 * * * * XDG_RUNTIME_DIR=/run/user/$(id -u) notify-send ");
+		strcat(command,getJoke);
+		strcat(command," \'; } | crontab -");
+		
+		system(command);
+
+		free(getJoke);
+		free(command);
+	
+		return SUCCESS;
+	}
+
+	// automata command
+	if (strcmp(command->name, "automata") == 0)
+	{
+		char **text = malloc(sizeof(char*) * 200);
+		char temp[200];
+		int totalLine = 0;
+		set_random_automata(text,&totalLine);
+		
+		// Print
+		int pageStart = 0;
+		int line1Back = 0;
+		int isBtwait = 0;
+		int btWaitSkip = 0;
+		
+		for (int i = 0; i< totalLine -1;i++){
+			
+			int len = strlen(text[i]);
+			isBtwait = 0;
+			btWaitSkip = 0;
+			
+			//new page
+			if (strncmp(text[i], "<page>",6) == 0){
+				fputs("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n",stdout);
+				pageStart = i;
+				continue;	
+			}
+			// End page
+			if (strncmp(text[i], "</page>",7) == 0){
+				pageStart = i;
+				continue;	
+			}
+
+			// Waiting
+			char *wait = strstr(text[i],"<bt_wait>");
+			int index = -1;
+			if (wait != NULL){
+				index = wait - text[i];
+				
+			}
+			if (strncmp(text[i]+len - 11,"<bt_wait>",8) == 0){
+				//usleep(200000);
+				isBtwait = 1;
+				btWaitSkip = len - 11;
+			}
+			usleep(200000); // new line
+
+			line1Back = i - 1;
+			for(int j = 1; j < len; j++){
+				
+				// btwaits
+				if (index != -1 && j == index + 11){
+					sleep(1); 
+				}
+				
+				// Animation //
+				fputs("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n",stdout);
+				
+				// Prints text[pageStart,...,line1Back]
+				for(int line = pageStart; line <= line1Back; line++){
+					
+					if (strncmp(text[line]+strlen(text[line]) - 11,"<bt_wait>",8) == 0){
+						char tempWait[200];
+						strcpy(tempWait,text[line]);
+						tempWait[strlen(text[line]) - 11] = '\0';
+						fputs(tempWait,stdout);
+						fputs("\n",stdout);
+						
+					}else{
+						if (strncmp(text[line], "<page>",6) == 0){
+							continue;	
+						}
+						if (strncmp(text[line], "</page>",6) == 0){
+							continue;
+						}
+						fputs(text[line],stdout);
+					}
+
+				}
+				
+					// Prints char by char
+					strcpy(temp,text[i]);
+					temp[j-1] = '\n'; 
+					temp[j] = '\0';
+					fputs(temp,stdout);
+					usleep(60000);
+						
+			}
+			
+			
+		}
+		printf("\n");
+
+		free(text); 
+		
+	}
+
+	pid_t pid = fork();
+	
+	if (pid == 0) // child
+	{	
+		int shm_fd;
+		void *ptr;
+
+		// create the shared memory segment 
+		shm_fd = shm_open(name, O_CREAT | O_RDWR, 0666);
+
+		// configure the size of the shared memory segment 
+		ftruncate(shm_fd,SIZE);
+
+		// now map the shared memory segment in the address space of the process 
+		ptr = mmap(0,SIZE, PROT_READ | PROT_WRITE, MAP_SHARED, shm_fd, 0);
+		if (ptr == MAP_FAILED) {
+			printf("Map failed\n");
+			return -1;
+		}
+
+		// Checks if cdh is called
+		sprintf(ptr,"%d",-1);
+
+		/* cdh command */
+		if (strcmp(command->name, "cdh") == 0)
+		{	
+			// No arg cdh 
+			if (command->arg_count == 0){
+				char dirLetter;
+				int letterIndex;
+				print_history(saveDir);
+				printf("Select directory by letter: ");
+				scanf("%c",&dirLetter);
+
+				letterIndex = dirLetter - 'a';
+
+				// Writes the index of wanted dir to shared memory
+				sprintf(ptr,"%d",letterIndex);
+				
+				return SUCCESS;
+
+			}else{
+
+				// Removes history file with first argument 'remove'
+				if (strcmp(command->args[0],"-r") == 0){
+					remove(history_path);
+					printf("cdh: History file removed\n");
+				return SUCCESS;
+			}
+
+			}
+		
+		}
+		
 		// increase args size by 2
 		command->args = (char **)realloc(
 			command->args, sizeof(char *) * (command->arg_count += 2));
@@ -464,8 +664,9 @@ int process_command(struct command_t *command)
 		/// TODO: do your own exec with path resolving using execv()
     	char path[MAX_SIZE] = "/bin/";	
 		strcat(path,command->name);
-	
+		
     	if (command->arg_count <= 1){ printf("Invalid input!\n "); return 0; }
+		
       	execv(path, command->args);
       	exit(0);
 
@@ -476,10 +677,204 @@ int process_command(struct command_t *command)
 		
 		if (!command->background){ 
 			wait(NULL);
+			int read_cdh;
+		
+			int shm_fd;
+			void *ptr;
+		
+			// open the shared memory segment 
+			shm_fd = shm_open(name, O_RDONLY, 0666);
+			if (shm_fd == -1) {
+				printf("shared memory failed\n");
+				exit(-1);
+			}
+
+			// now map the shared memory segment in the address space of the process 
+			ptr = mmap(0,SIZE, PROT_READ, MAP_SHARED, shm_fd, 0);
+			if (ptr == MAP_FAILED) {
+				printf("Map failed\n");
+				exit(-1);
+			}
+			read_cdh = atoi(ptr);
+
+			// Remove shared memory
+			if (shm_unlink(name) == -1) {
+			printf("Error removing %s\n",name);
+			exit(-1);
+	}
+
+			// Go to wanted dir by cd command
+			if (read_cdh != -1){
+				int letterIndex = read_cdh;
+
+				char goPath[200];
+				strcpy(goPath,history[letterIndex]);
+				
+				if (saveDir -1 !=letterIndex)
+					goPath[strlen(goPath) - 1] = '\0';
+
+				// cd command 
+				r = chdir(goPath);
+				if (r == -1)
+					printf("-%s: %s: %s\n", sysname, command->name, strerror(errno));	
+			}
 		}
+		
 		return SUCCESS;
 	}
 
 	printf("-%s: %s: command not found\n", sysname, command->name);
 	return UNKNOWN;
+}
+
+
+/* Helper Functions */
+
+/**
+ * Main 'cdh' command function which reads, modifies and writes
+ * the recent directories
+ * @return          [success]
+ */
+int save_history(){
+	saveDir = 0;
+
+	char currentDic[PATH_MAX];
+	getcwd(currentDic, sizeof(currentDic));
+	 
+	// Read history file and get # of saved dirs 
+	if (!read_history_file()){
+		printf("cdh: History file created\n");
+	}
+	
+	// Add current dic to history variable 
+	if (saveDir >= MAX_HISTROY_SIZE ){
+		// History is full
+		for(int i = 0; i < saveDir - 1; i++){
+			strcpy(history[i],history[i + 1]);
+		}
+		strcpy(history[saveDir-1],currentDic);
+		
+	}else{
+		// History is not full
+	  	strcpy(history[saveDir],currentDic);
+		saveDir++;
+	}
+	
+	if (!write_history_file()){
+		printf("Failed to write History file\n");
+		return 0;
+	}
+	
+	return 0;
+	
+}
+
+/**
+ * Reads from HOME/cdh_history.txt and save it to history variable
+ * @return            [success]
+ */
+int read_history_file(){
+		
+	FILE *file_read = fopen(history_path,"r");
+	char line[PATH_MAX];
+
+	if(file_read == NULL) { 
+		// creates history file
+		FILE *file_write = fopen(history_path,"w");
+		fclose(file_write);
+		return 0; 
+	}	 
+  
+	while(1)
+   	{
+		fgets(line,PATH_MAX,file_read);
+		if(feof(file_read)) break; 	
+		// Save to variable history from file and get # el
+	  	strcpy(history[saveDir],line);
+	  	saveDir++;	
+   	}
+	fclose(file_read);
+	
+	return 1;
+}
+/**
+ * Writes to HOME/cdh_history.txt from history variable
+ * @return            [success]
+ */
+int write_history_file(){
+	
+	FILE *file_write = fopen(history_path,"w");
+
+	if(file_write == NULL) { return 0; }	 
+  
+	for(int i = 0; i < saveDir -1; i++)
+   	{
+		fprintf(file_write, "%s", history[i]);
+   	}
+	fprintf(file_write, "%s\n", history[saveDir - 1]);
+	fclose(file_write);
+	
+	return 1;
+}
+/**
+ * Prints the history 
+ * @return            [success]
+ */
+int print_history(){
+	
+	char charNumber = 'a';
+	
+	for(int i = 0; i < saveDir; i++){
+		printf("%c)  %s",charNumber+i,history[i]);
+	}
+	printf("\n");
+	return 1;
+
+}
+
+/**
+ * Finds and saves the HOME path
+ */
+void initialize_history_path(){
+	strcpy(history_path,getenv("HOME"));
+	strcat(history_path,"/cdh_history.txt");
+}
+
+/**
+ * Selects random automata file from the dir and reads it 
+ * to automata variable
+ */
+int set_random_automata(char **automata, int *totalLine){
+
+	int r_int = rand() % FILE_NUMBER;  
+	char r_str[3];
+	sprintf(r_str, "%d", r_int);
+
+	char *path = malloc(sizeof(char*) * 100);
+	strcpy(path,"automata/automata_");
+	strcat(path,r_str);
+	strcat(path,".txt");
+	
+	FILE *file_read = fopen(path,"r");
+	char *line = (char*)malloc(200 * sizeof(char));  
+
+	if(file_read == NULL) { 
+		printf("Failed to read file\n");
+		return 0; 
+	}	 
+  	*totalLine = 0;
+	while(1)
+   	{	
+		fgets(line,1000,file_read);
+		automata[*totalLine] = malloc(sizeof(char) * 200);
+	  	strcpy(automata[*totalLine],line);
+		(*totalLine)++;
+		if(feof(file_read)) break; 
+   	}
+
+	fclose(file_read);
+	free(line);
+
+	return 1;
+
 }
