@@ -6,11 +6,12 @@
 #include <string.h>
 #include <stdbool.h>
 #include <errno.h>
-
+#include <dirent.h>
 #include <fcntl.h>
 #include <sys/shm.h>
 #include <sys/stat.h>
 #include <sys/mman.h>
+
 const char *sysname = "shellfyre";
 
 #define MAX_SIZE 20
@@ -344,6 +345,75 @@ int prompt(struct command_t *command)
 
 int process_command(struct command_t *command);
 
+void filesearch(char* argument1,char* argument2,char* path){
+	printf("Argument1 %s,argument2 %s, path is %s\n",argument1,argument2,path);
+	DIR *d;
+	DIR *d2;
+	struct dirent *dir;
+	d=opendir(path);
+	if(strcmp(path,".") == 0 || strcmp(path,"..")==0){}
+	else{
+		if(strcmp(argument1,"-o") == 0 ){
+			//open files
+			while((dir=readdir(d)) != NULL){
+				if(strstr(dir->d_name,argument2)!= NULL){
+					char* temp[]={"xdg-open",dir->d_name,NULL};
+					execvp("xdg-open",temp);
+					printf("\n");
+				}
+			}
+		}
+		if(strcmp(argument1,"-r") == 0){
+			//recursive search
+			while((dir=readdir(d)) != NULL){
+				if(strcmp(dir->d_name,".")== 0 || strcmp(dir->d_name,"..")== 0 ||strcmp(dir->d_name,".git")== 0 ){}
+				else{
+					if(strstr(dir->d_name,argument2)!= NULL){
+						printf("%s/%s \n",path,dir->d_name);
+					}
+					if((d2=opendir(dir->d_name)) != NULL){
+						filesearch(argument1,argument2,dir->d_name);
+					}
+					closedir(d2);
+				}	
+			}
+			closedir(d);
+		}
+		else{
+			while((dir=readdir(d)) != NULL){
+				if(strstr(dir->d_name,argument1)!= NULL){
+					printf("%s \n",dir->d_name);
+				}
+			}
+			closedir(d);
+		}
+	}
+}
+void take(char* arguments){
+	char *c=strtok(arguments,"/");
+	while(c != NULL){
+		printf("%s \n",c);
+		mkdir(c,0755);
+		chdir(c);
+		c=strtok(NULL,"/");
+	}
+}
+void factors(int number){
+	int i=2,oldi=i;
+	printf("factors of %d are: \n",number);
+	while(i<=number){
+		if(number % i==0){
+			printf(" %d",i);
+			number=number/i;
+			i=oldi;
+		}else{
+			oldi=i;
+			i++;
+		}
+	}
+	printf("\n");
+	
+}
 int main()
 {
 	// Gets the HOME path to save cdh_history.txt file
@@ -394,6 +464,17 @@ int process_command(struct command_t *command)
 	}
 
 	// TODO: Implement your custom commands here
+	if(strcmp(command->name,"filesearch") == 0){
+		printf("%s %s %s %s\n",command->name,command->args[0],command->args[1],command->args[2]);
+		filesearch(command->args[0],command->args[1],"./");
+	}
+	if(strcmp(command->name,"take") == 0){
+		printf("take %s \n",command->args[0]);
+		take(command->args[0]);
+	}
+	if(strcmp(command->name,"factors")== 0){
+		factors(atoi(command->args[0]));
+	}
 
 	// joker command
 	if (strcmp(command->name, "joker") == 0)
