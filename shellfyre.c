@@ -402,6 +402,7 @@ void take(char* arguments){
 	char *c=strtok(arguments,"/");
 	while(c != NULL){
 		mkdir(c,0755);
+		save_history();
 		chdir(c);
 		c=strtok(NULL,"/");
 	}
