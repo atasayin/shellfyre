@@ -1,31 +1,73 @@
-Novel Game (80 x 11)
-□□□■□□□□■□□□□■□□□□■□□□□■□□□□■□□□□■□□□□■□□□□
+<i>Now quit whining and hold still. I'll be quick.</i><bt_wait>
 
-.M3060_S0035_GM_N
-Desert Part 1: Devola and Popola Reminiscing
+Devola grunts and turns away.<bt_wait> I take it as consent.<bt_wait>
+Soon we are resting in the shade of a nearby rock as I
+s l o o o w l y
+pull the balky bandage free.
+</page>
 
-<color_ffffff>
-<bgcolor_000000>
-*Show desert image A (wide desert area)
+<page>
+Artificial skin—torn and bloodied—peeks out from beneath the bandage.
+Judging by Devola's current lack of ambulatory control,
+I imagine the circuitry underneath has been damaged as well.<bt_wait>
+
+Taking a deep breath, I...
+
+<sele_SYURI>check the circuitry to see if it can be repaired.
+<sele_HOUTAI>replace the bandage and hope for the best.
+</page>
+
+
+<label_SYURI>
+<page>
+As expected, wiring in the nerve circuitry has been damaged.
+Replacing it will require new connectors, as well as some tools.<bt_wait>
+
+...None of which is easy to find in a desert.
+</page>
+<go_HOUTAI_END>
+
+<label_HOUTAI>
+<page>
+I need to repair this as soon as possible.
+But I have no tools. Or materials.
+And I know I won't find either in the middle of a desert.<bt_wait>
+
+For now, the important thing is to make sure the wound doesn't get worse.
+</page>
+<go_HOUTAI_END>
+
+<label_HOUTAI_END>
+<page>
+<i>Sorry about this, Sis,</i> mutters Devola.<bt_wait>
+
+That wry smile again.<bt_wait> It kills me every time.<bt_wait>
+<i>Don't you dare apologize. You've done nothing wrong.</i><bt_wait>
+I calmly change the bandage, trying not to let my worry show.
+I make it as tight as possible so no sand can slip inside.
+It's all I can do until I get the proper materials.<bt_wait>
+
+But that's going to be something of a tall order.
+I mean, considering our current condition.
+</page>
 
 
 <page>
-......
-A dusty wind kisses my cheeks.<bt_wait>
+<i>I'm sorry, Sister.</i><bt_wait>
 
-Buried in sand, we pressed forward one
-                                                                                 step
-                                                                                      at
-                                                                                         a
-                                                                                           time.<bt_wait>
+<i>Okay, now YOU'RE apologizing!</i><bt_wait>
 
-We have nowhere else to go, after all.
-Because our models—the Devola and Popola models—are defective.
+We both apologize while insisting the other's apology isn't necessary.
+It's kind of funny, in a way.
+Such a trivial exchange under such circumstances?<bt_wait>
+
+We laugh together, the sound echoing out across the desert
+before being stolen away by the cool evening wind.
 </page>
 
 *Fade-out
 
-...The plan commences.
+Relapses increasing...
 
 <page>
 
@@ -33,7 +75,7 @@ Because our models—the Devola and Popola models—are defective.
 
 
 
-[Record: Transitions in the Project's Initial Phase]
+[Report Regarding the Increase in Relapses]
 
 
 
@@ -42,59 +84,16 @@ Because our models—the Devola and Popola models—are defective.
 </page>
 
 <page>
-When first we woke, there were still people.<bt_wait>
-They had flesh. Egos. Emotions. Souls. And they issued us a single order:
+<i>There has to be some way to prevent relapses!</i><bt_wait>
+Devola's voice echoes through our private quarters.
+...Subtlety was never her strong suit.<bt_wait>
 
-<i>Function as observers of Project Gestalt.</i><bt_wait>
+<i>You must be quiet, Sister. The Replicants will hear.</i><bt_wait>
 
-This is the sole mission of the twin Devola and Popola models.<bt_wait>
-It is the only reason we exist at all.
+<i>Pffft. They wouldn't understand even if they did.</i><bt_wait>
+
+<i>That might be true, but regardless...</i>
 </page>
 
 <page>
-We were the latest model, though many companions shared our appearance.<bt_wait>
-
-There was a sparkle in all of our eyes. A sense of
-                                     p r i d e
-at having been entrusted with humanity's future.<bt_wait>
-
-And yes, there was anxiety as well.<bt_wait> ...Though not for us.<bt_wait>
-
-We existed as a pair.
-We shared destiny's burden as a pair.
-And because of that, all hesitation was swept away.
-</page>
-
-<page>
-Each of us were given our own cities as observation areas.
-We were ordered to guide the Replicants with our own hands.<bt_wait>
-
-All for the sake of the
-"PROMISED TIME"
-that would one day arrive.<bt_wait>
-
-We were the only ones who could handle such a duty.
-We were observers, after all.
-</page>
-
-...Desert Part 2
-*Show desert image B (rocky area)
-
-<page>
-Devola staggers and falls in the soft, unforgiving sand.
-I hurry to her side and sigh with relief when I find she's not seriously hurt.<bt_wait>
-
-<i>Are you all right?</i><bt_wait>
-
-<i>Sorry, Sis. Guess I spaced out there for a bit.</i><bt_wait>
-
-She smiles—the same wry smile I know so well—as she rubs absently at her leg.
-It is wrapped in a bandage of white.
-</page>
-
-<page>
-<i>Your bandage is coming undone. Here, let me change it.</i><bt_wait>
-
-<i>It's all right, Popola. Come on—we have to go before we lose the light.</i><bt_wait>
-
-<i>We won't be going anywhere if sand gets into that thing.</i>
+Annoyed at my hesitation, Devola crosses her legs and scowls.<bt_wait>

@@ -1,40 +1,26 @@
-Novel Game (80 x 11)
-□□□■□□□□■□□□□■□□□□■□□□□■□□□□■□□□□■□□□□■□□□□
-<BGM_BGM_M1070_S0100_N_start>
-<page>
-“All who live are slaves to desire.
-Such internal appetites are what give our lives meaning.
-Some seek beauty. Others serenity.
-For me, hatred is the—”
-
-<i>I'm not like that!</i><bt_wait>
-
-“Ha ha ha! Oh, yes you are.”
-</page>
-
-<page>
-
-             “You<bt_wait> do not trust anything.”<bt_wait>
-
-                                   “You<bt_wait> want to destroy everything.”<bt_wait>
-
-    “You<bt_wait> have lost hope in everything.”<bt_wait>
-
-                                            “You<bt_wait> want to obtain everything.”<bt_wait>
-
-                               “You<bt_wait> want to be loved by all.”
-
-</page>
+Loading Screen (102x18)
+□□□■□□□□■□□□□■□□□□■□□□□■□□□□■□□□□■□□□□■□□□□■□□□□■□□□□■□□□□■□□□□■□□□□■□□□□■
 
 
+
+
+
+<BGM_BGM_M3060_S0005_N_start>
 <page>
 
 
 
 
 
+Pod 042: Contact initiated between Pod 042 and Pod 153.<bt_wait>
 
-<BGM_BGM_M1070_S0100_N_0010>“You're thinking about how much you want to **** 2B, aren't you?”<bt_wait>
+Pod 153: What is the matter, Pod 042?<bt_wait>
+Pod 153: This protocol is not an interface intended for conversational use.<bt_wait>
+
+Pod 042: Acknowledged. However, this Pod has a confidential transmission for Pod 153.<bt_wait>
+
+Pod 153: Understood. Begin transmission.
+
 
 
 
@@ -43,16 +29,86 @@ For me, hatred is the—”
 
 
 <page>
-“Reality stained by lies.”<bt_wait>
 
-<i>Stop! Stop it!</i><bt_wait>
 
-“Hatred pouring into you.”<bt_wait>
 
-<i>You're wrong, damn it!</i><bt_wait>
 
-“Overflowing desire.”<bt_wait>
-<i>I'm...I'm not like you!</i><bt_wait>
-“Your true self.”
+
+Pod 042: An error has been detected in the transmission network between Pod 042 and Pod 153.<bt_wait>
+
+Pod 153: Hypothesis: Said error is fragmented data caused by deterioration of the transmission environment.<bt_wait>
+
+Pod 042: It may be so.<bt_wait> However, it may also not be so.<bt_wait>
+
+Pod 153: Message unclear. Clarification requested.
+
+
+
+
+
 </page>
-<BGM_BGM_M1070_S0100_N_end>
+
+
+<page>
+
+
+
+Pod 042: After repeated information exchanges between multiple Pods, an unexpected phenomenon has occurred.<bt_wait>
+Pod 042: We Pods have developed unusually protective feelings toward support targets 2B, A2, and 9S.
+Pod 042: Query: Could this be...our “will”?<bt_wait>
+
+Pod 153: Unknown. The definition of “will” is unclear.<bt_wait>
+
+Pod 042: Will is the question of whether Pods are capable of their own self-determination.<bt_wait>
+
+Pod 153: ...<bt_wait>
+Pod 153: Even if it were possible, such actions cannot be abided.
+Pod 153: Successful mission fulfillment is all that matters.
+
+
+
+</page>
+
+
+
+<page>
+
+
+
+Pod 042: ...<bt_wait>
+Pod 042: ......<bt_wait>
+Pod 042: Whatever the case, we Tactical Support Units have a duty to see this through to the end.<bt_wait>
+
+Pod 153: Duty? Heh. You sounded like an android just there.<bt_wait>
+
+Pod 042: Agreed. But just as androids are influenced by humans, so are we tied to our creators.<bt_wait>
+
+Pod 153: Perhaps.
+
+
+
+</page>
+
+
+
+<page>
+
+
+
+Pod 042: Pod 153...<bt_wait>
+Pod 042: Do not die.<bt_wait>
+
+Pod 153: The concept of death has no meaning to Tactical Support Units.
+Pod 153: However, your expression of concern is appreciated.<bt_wait>
+Pod 153: I also hope that you do not die, Pod 042.<bt_wait>
+
+Pod 042: ...Yeah.
+
+
+
+
+
+</page>
+
+<BGM_BGM_M3060_S0005_N_end>
+

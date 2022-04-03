@@ -1,169 +1,195 @@
 Novel Game (80 x 11)
 □□□■□□□□■□□□□■□□□□■□□□□■□□□□■□□□□■□□□□■□□□□
 
-...M6010_S0050_N
+...M6010_S0150_N
 
-<BGM_BGM_M6010_S0050_N_start>
+
+<BGM_BGM_M6010_S0150_N_start>
 <page>
+According to the YoRHa team, there's an enemy server beneath Mt. Ka'ala.<BGM_BGM_M6010_S0150_N_0010>
+If we can take it out, we might finally gain some ground in this endless war.<bt_wait>
+But in order for that to happen, we need to work together.<bt_wait>
 
-
-
-My name is Anemone, and I lead the android Resistance.<bt_wait>
-This is a record of the battles I've experienced—and my losses.<bt_wait>
-I leave it here as a warning to myself.
-
-
-
+After a bit of thought, Rose decides to throw in with the new models.<bt_wait>
+It's a relationship that changes as time goes on.
 </page>
 
 <page>
-The machine lifeform attack lands far too close for comfort.<bt_wait><BGM_BGM_M6010_S0050_N_0010>
-I smell an acrid odor and know that some of my hair has been singed off.<bt_wait>
+“Er, what are you doing, Dahlia?”<bt_wait>
+“Just...showing this idiot...how weak she is!” replies a winded Dahlia.<bt_wait>
+“Ha!“ wheezes her opponent, Number 16. “You're obviously...outmatched!”<bt_wait>
 
-“Anemone! Retreat for now! That's an order!”<bt_wait>
-
-That's my captain, Rose. I obey her without hesitation, running from the front
-as soon as I take out a few nearby enemies. Feet flying beneath me, I leap into
-the hastily built trench where my Resistance comrades are gathered.
+The two of them are taking turns hitting each other.<bt_wait>
+It seems friendly enough...as those things go.<bt_wait>
+Plus, they'd been doing it for so long now that both of them are out of
+energy. They likely couldn't punch through a piece of paper at this point.
 </page>
 
 <page>
-How many battles is this now?<bt_wait>
+The rest of the group stares at the combatants and tries not to grin.<bt_wait>
+Dahlia and Number 16 seem to butt heads over the smallest little things.<bt_wait>
+Maybe it's because they're so much alike.<bt_wait>
 
-The same sights and sounds. The same struggle of attrition.<bt_wait>
-My Resistance forces play the same war on repeat with no end in sight.<bt_wait>
-
-I don't even remember why we're fighting anymore,
-but I must continue regardless.<bt_wait>
-I must continue until one side or the other is dead.
+It's almost annoying how quickly muscleheads learn to like one another.
 </page>
 
 <page>
-“This looks bad, Shion. What should we do?”<bt_wait>
-“Calm down, Lilly. We'll find an opening somewhere.”<bt_wait>
-“You don't search for an opening! You <i>make</i> one!”<bt_wait>
-“Dahlia, wait!”<bt_wait>
+The rest of us converse as Dahlia and 16 continue to spar.<bt_wait>
 
-I grab Dahlia's arm before she can flee the trench and turn to Rose.
-She brought us here, after all—she must have a plan of some kind.<bt_wait>
-But as the enemy horde closes in, Rose simply squints off in the distance.
+“We call each other by names that I gave us,” explains Rose.<bt_wait>
+“I see,” responds Number 4. “I thought it strange that you didn't use code numbers.”<bt_wait>
+
+She nods while she speaks, as though this all makes perfect sense.
 </page>
 
 <page>
-“There's been a change in enemy movements,” she says finally.
-“Someone just started fighting over there.”<bt_wait>
-“But that's not possible,” stammers Margaret. “We're...all here.”<bt_wait>
+Suddenly Captain Rose breaks out into a wide grin. “You know what?” she says.<bt_wait>
+“I think we should give all of you names as well!”<bt_wait>
 
-Margaret's right. There are only nine of us left capable of fighting the machines:
-Captain Rose. Gerbera. Lilly. Sonia. Erica. Margaret. Shion. Dahlia...<bt_wait>
-And me. Anemone. <bt_wait>We're all that's left of the eighth descent forces.<bt_wait>
+“No,” says Number 2. “It would be a waste.”<bt_wait>
 
-The one that took place roughly 200 years ago.
+Rose eyes her warily. “Er, a waste?”
 </page>
 
 <page>
-An uneasy Sonia pulls Shion close and chews on a loose strand of hair.<bt_wait>
-“I don't like it,” she says. “What if it's some kind of machine trap?”<bt_wait>
+“You can name me when the mission is over,” she replies as a blush rises in her
+cheeks. I could tell her words also served as a wish for success.<bt_wait>
 
-I wait for a while, heart pounding, until I hear the enemy fire lessen.<bt_wait>
-“Okay,” I say, “this looks like our chance. Let's pull back.”<bt_wait>
-“Someone's fighting out there, Anemone!” cries Dahlia. “We can't abandon them!”<bt_wait>
-“Oh, so you want to risk all of our lives for some <i>stranger</i>? Come on!
-We don't even know if this mystery fighter is on our side or not.”<bt_wait>
-“That's not what I said!”<bt_wait>
-“Enough, you two,” barks Shion. “The captain makes the final decision on this.”
+“All right,” responds Rose. “I'll think of a name for you by then.”<bt_wait>
+
+She knows this is a fleeting promise, as most such things are. But it doesn't
+matter—already I can see us growing closer to the YoRHa team.<bt_wait>
+
+Well, my friends are growing closer to them, at least.
 </page>
 
 <page>
-After Shion speaks, all of us turn to Captain Rose. She looks us in the eyes
-and nods slowly before starting to speak.<bt_wait>
+“You're all being careless,” I state, much louder than I intend.<bt_wait>
+Luckily, the others either don't hear or decide to ignore it.<bt_wait>
 
-“Gerbera? The enemy is heading toward the explosives we set up earlier, yes?”<bt_wait>
-
-Gerbera thinks for a moment. “Now that you mention it, yeah. They are.”<bt_wait>
-
-A slight smile crosses Rose's face, yet she still seems perfectly composed.<bt_wait>
-“Good. Then if this goes well, we might be able to take them all out.”
+Don't get me wrong—I'm not about to go against the captain's judgment.<bt_wait>
+But that doesn't mean I'm ready to just lie down and trust our new “friends.”
 </page>
 
 <page>
-“I want all of you to leave this trench and get to those explosives,” says Rose.<bt_wait>
-“We'll let the blast take out most of them, then clean up the stragglers.<bt_wait>
-Identifying our unknown mystery fighters can wait until we're done.”<bt_wait>
+Ours is a solitary existence that has long since been abandoned by the moon.
+No matter how they cried, mourned, or struggled, the voices of our departed comrades
+went unanswered.<bt_wait>
 
-No one objects to the captain's decision. The moment she issues the order,
-we all leap from the trench as one and reenter the fray.<bt_wait>
-
-When we reach the battle, we find what appears to be another set of androids
-dressed in strange black outfits. <bt_wait><BGM_BGM_M6010_S0050_N_0020>Before they even know what's happening,
-we detonate the explosives, kill the remaining machines, and turn our guns
-in their direction.
+So how can you trust an entire squad of new models that you just met?
 </page>
 
 <page>
-“All right,” I say to the strangers. “Start talking.”<bt_wait>
-“Easy,” says one of the mystery androids. “We're on your side.
-We're new models rolled out as part of something called Project YoRHa.”<bt_wait><BGM_BGM_M6010_S0050_N_0030>
+“What's wrong, Anemone?”<bt_wait><bt_wait><BGM_BGM_M6010_S0150_N_0020>
+I hear Lilly calling to me. She's likely concerned about me being apart from
+the rest of the group.<bt_wait>
+“Nothing,” I begin “I'm fi—”<bt_wait>
+Before I can complete my thought, Lilly suddenly opens her mouth and emits
+a terrible scream.
 
-“Really?” I say. “We haven't heard anything about new models.”<bt_wait>
-
-I probably speak with more bluster than necessary, but I have to make sure
-they're actually on our side. I don't think they're lying, necessarily,
-but I can't read their expressions thanks to the giant goggles they wear.<bt_wait>
-And frankly, a little caution never goes amiss in the middle of a war.
+“AaaaaaAAAAAAAAAAAAAH!”
 </page>
 
 <page>
-We learn that the four androids refer to each other as Number 2, Number 4,
-Number 16, and Number 21.<bt_wait> They also aren't in a hurry to share much more.<bt_wait>
+Lilly's scream echoes throughout the entire camp.<BGM_BGM_M6010_S0150_N_0030>
+It's heartbreaking. It's agony. It's...<bt_wait>horrible.<bt_wait>
 
-“Our mission is top secret,” one of them says. “That's why you haven't heard
-about us yet.”<bt_wait>
-I slowly draw my knife in an attempt to gauge their reaction. “So in other 
-words, no one will know any better if I kill you right now?”<bt_wait>
-“Stand down, Anemone,” says Rose softly.<bt_wait>
-“No!” cries Lilly. “She's right! We've all seen how quickly the enemy is
-evolving. Who's to say these four aren't machines that just look human?”<bt_wait>
-My companions nod in agreement. This damn war has made us all suspicious.
+“She's infected!” screams Rose. “Lilly's infected!”<bt_wait>
+
+We all draw weapons out of instinct as much as anything else, pointing them
+at our comrade as she continues to scream and scream and scream.<bt_wait>
+
+We all know what's happening. We've seen it before.<bt_wait> It's a logic virus—
+a machine weapon that hijacks android systems and overwrites their data.<bt_wait>
+And since there's no known cure...<bt_wait>it's also a death sentence.
 </page>
 
 <page>
-One of the strangers—Number 16, I believe—draws a long knife from its sheath.
-“If it's a fight you want,” she says, “I'm happy to give it to you.”<bt_wait>
+I need to show her mercy.<bt_wait> I need to set her free.<bt_wait>
 
-Before I can respond, Dahlia leaps in front of me with her weapon at the ready.<bt_wait>
-This is it. We're going to fight.<bt_wait>
-But just before the battle can erupt, the android called Number 2 steps forward.<bt_wait>
+My finger rests on the trigger, yet I hesitate. And before I can make that
+final, fateful decision, I hear a voice rise up from somewhere behind me:<bt_wait>
 
-“Wait,” she says.
+“Stop! You can't do this! You can't just let your friend DIE!”<bt_wait>
+
+It's Number 21. The girl I'd thought to be cool and composed beyond all measure
+was now pleading with me to spare Lilly's life.<bt_wait>
+
+What do I do?<bt_wait> What the hell do I DO!?
 </page>
 
 <page>
-“There used to be sixteen of us,” says Number 2, “but the others died during the descent.<bt_wait>
-We're isolated and alone out here. Reinforcements aren't coming. And that means
-we have to finish this mission with the soldiers we have left. We don't need
-more enemies right now. What we need...is allies.”<bt_wait>
-
-She finishes this speech with a soft sigh, as if trying and failing to hold her
-emotions in check.<bt_wait>
-
-I know that sort of voice.<BGM_BGM_M6010_S0050_N_0040>
+“Lilly said you were like a family to her! You can't abandon family,
+not before you exhaust every possibility!”<bt_wait>
+“What can you do, then?”<bt_wait>
+“I'll use my power to erase the virus!”<bt_wait>
+“That's impossible!”
 </page>
 
 <page>
+Rose spat out what we were all thinking, but before we can act,
+Lilly starts to send nearby comrades flying with impossible strength.<bt_wait>
+I've seen infected androids before—I know how much damage they can do once the
+virus turns off their limiters. They'll fight and fight until they're utterly destroyed.<bt_wait>
 
-
-
-
-It's the voice of someone who still has hope, despite all the odds.
-
-
-
-
-
+Dahlia and Number 16 rush into the fray, trying to suppress their former friend,
+but she swats them away like flies.
 </page>
-<BGM_BGM_M6010_S0050_N_end>
 
+<page>
+How many of us have been infected now?<bt_wait>
+
+How many friends have I been forced to put down?<bt_wait>
+
+The heart I'm not supposed to have aches with the thought. It aches as I
+remember all of the identification numbers that have been retired.<bt_wait>
+
+When did I start giving them names?<bt_wait>
+When did I decide I simply couldn't endure it any longer?
+</page>
+
+<page>
+“Initiating reprogramming sequence!”<bt_wait>
+
+That voice. ...Number 21? She's screaming something about...reprogramming?<bt_wait>
+
+I don't know what to do.<bt_wait>
+I am lost.<bt_wait>
+
+As my vision slowly clears, I see Number 21 inputting commands into her terminal
+while Number 2 and Number 4 hold her down. They hold her as she writhes and...<bt_wait>
+
+Rose stares at me with surprise. <bt_wait>...Oh no. <bt_wait>I'm holding Lilly too.
+</page>
+“Just hold on, Lilly!” cries Number 21. “I'm going to save you!”<bt_wait>
+
+She's risking her life for Lilly. They're ALL risking their lives.
+
+“Uploading data set now!”<bt_wait>
+
+Her cry pierces my very soul, if I can be said to have such a thing.
+
+I want to believe them. Please let this work. Please...
+</page>
+Lilly's body convulses and thrashes beneath our combined weight. She tries to
+throw Number 2 from her, but somehow the other woman manages to hang on.<bt_wait>
+
+I hold onto Lilly with all my strength.<bt_wait>
+I will not let go.<bt_wait>
+I will not lose anyone else!<bt_wait>
+
+Suddenly, Lilly's body goes limp. Number 21 looks down at the terminal and emits
+a harsh and ragged sigh.
+
+“Virus removal...complete.”<BGM_BGM_M6010_S0150_N_0040>
+</page>
+She's back.<bt_wait>
+Lilly is back.<bt_wait>
+
+Shouts of joy ring out from my Resistance companions. I embrace Lilly in a hug
+that stuns me with its ferocity, then look at Number 21 through teary eyes.<bt_wait>
+
+I'll be damned. I think she almost smiles.
+</page>
+<BGM_BGM_M6010_S0150_N_end>
 ...SID_end
-
-

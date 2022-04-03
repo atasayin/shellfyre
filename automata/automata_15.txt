@@ -1,100 +1,100 @@
-<i>The Black Scrawl took another victim. That's three this month.</i>
-<i>It's spreading way too fast.</i><bt_wait>
 
-<i>Let's wait and see what happens.</i><bt_wait>
+<page>
 
-<i>I'm tired of hearing you say that!</i><bt_wait>
 
-Her shout makes me jump.<bt_wait> Just a little.<bt_wait>
-But enough for her to see.
+
+
+
+[Record of Project Gestalt's End]
+
+
+
+
+
 </page>
 
 <page>
-<i>I'm sorry, Sis. It's not your fault.</i>
-<i>I shouldn't have lashed out like that.</i><bt_wait>
+One day, our role as observers suddenly ended when Project Gestalt collapsed.
+All due to the actions of Devola and Popola models from another town.<bt_wait>
 
-<i>It's okay. I understand.</i><bt_wait>
-
-<i>It's all going wrong. You can feel it too.</i><bt_wait><i>...Right?</i><bt_wait>
-
-<i>I...</i><bt_wait>
-
-When I was first assigned to Project Gestalt, I was over the moon with pride.<bt_wait>
-But now, my chest hurts just to think about it. If it were to fail...
+With the original Gestalt lost, humanity was 
+doomed<bt_wait>   cursed<bt_wait>   damned<bt_wait>   fated
+to an inevitable extinction.<bt_wait>
+We gathered what remaining Replicant data we could find and launched it
+to   the   surface   of   the   moon.<bt_wait>
+And though success was as unlikely as finding a lost sand grain in the desert,
+we still had to attempt it. We still had to try.<bt_wait>
+We were androids, you see. Protecting humanity<bt_wait> was our instinct.
 </page>
 
 <page>
-Before we knew it, the Replicants had gained a sense of self.<bt_wait>
+Other androids, beholden to that same instinct, began to direct their hate
+at all the remaining Devola and Popola models.<bt_wait>
+We'd done it, after all.<bt_wait>
+We destroyed Project Gestalt.<bt_wait>
+We snuffed out the last hope of humanity.<bt_wait>
 
-And the Black Scrawl started moving fast.
-                                                                                  So fast.
-                                                                                             Like a wind.<bt_wait>
-
-Popola and I would go to the observation room and act like it was all okay.<bt_wait>
-We'd meet Replicants.<bt_wait> Talk to them.<bt_wait> Laugh with them.<bt_wait>
-Like we didn't have a care in the world.<bt_wait>
-
-But at night, we'd just hold each other and share the horror of it all.
+It started small. A few off-hand remarks. The occasional glance.<bt_wait>
+But even the smallest things have weight, and with enough of them combined,
+that weight eventually becomes a boulder.<bt_wait>
+Emotions boiled over. Remarks became jeers. And soon enough,
+my sister and I were hated.<bt_wait> Persecuted.<bt_wait> ...Outcasts.
 </page>
 
 <page>
-<i>I'm glad you were with me,</i> murmurs Popola.<bt_wait>
-<i>I couldn't have handled being an observer all alone.</i><bt_wait>
+At first, we simply accepted the fact that our friends turned on us.<bt_wait>
 
-<i>We were able to endure because we had each other.</i><bt_wait>
+It was almost unavoidable, I suppose.<bt_wait>
+We were observers for Project Gestalt, after all.
+And while we didn't cause it to fail, the people who did...<bt_wait>
+Well, they looked just like us.<bt_wait>
 
-Did the humans see this coming? Is that why that made a twin model?<bt_wait>
-Were they really so clever?<bt_wait> Were they really so cruel?<bt_wait>          
-
-I couldn't have done this by myself.<bt_wait> I would have
-d E S C e n D e D         I n t O        m A d N e S s s S<bt_wait>
-I simply couldn't bear such a burden all alone.
+So we accepted it. We took the resentment and scorn. We endured.<bt_wait>
+Because as crazy as it sounds, I think we actually felt...<bt_wait>responsible.
 </page>
 
 <page>
-<i>I'm going to try contacting a different city next time.</i>
-<i>Maybe these abnormalities are a localized phenomenon.</i><bt_wait>
+We moved from town to town in an effort to avoid persecution.
+But in one such town, my seemingly infinite patience finally broke.<bt_wait>
+My sister, Devola, met with unspeakable violence at the hands of the Resistance.
+She said something in response to their taunts.<bt_wait> Something quiet.<bt_wait>
+And though her words were ambiguous, they slashed her leg nearly in two.<bt_wait>
 
-<i>I pray that's the case. Even if we're of no use ourselves,</i>
-<i>things will still work out if the other observers can pull through.</i><bt_wait>
-
-<i>Don't worry. It's going to be okay.</i><bt_wait>
-
-But it wasn't okay.<bt_wait> Nothing was okay.<bt_wait>
-All thanks to a pair of Devola and Popola models from another town.
-</page>
-
-...Desert Part 3.
-*Show desert image C (near the housing complex)
-
-<page>
-The wind rubs my cheeks. The sand grazes my skin.
-...It's cold out here. How strange.<bt_wait>
-
-We walk with renewed purpose, hoping to make up for lost time.<bt_wait>
-Devola loses her balance every now and then—it gets bad after a while.
-I slip myself under her arm so she won't fall again and we press on.<bt_wait>
-<i>Is your leg all right?</i><bt_wait>
-<i>Well, I doubt I'll be dancing anytime soon, but yeah. It's fine.</i><bt_wait>
-
-She smiles as she says this, but I can tell she doesn't have much left.<bt_wait>
-And yet, she continues to smile.<bt_wait> All so I won't worry.
+My vision narrowed. Everything went red. And then...she smiled at me.<bt_wait>
+<i>It's okay, Sis. There's nothing we can do.</i><bt_wait>
+But it was too late. My emotions were no longer in my control.<bt_wait>
+I'm simply not strong enough to stand aside and let the most important person
+in the world to me come to harm.
 </page>
 
 <page>
-She's always been like this.<bt_wait>
-Smiling.<bt_wait> Joking.<bt_wait> Putting me at ease.<bt_wait>
+Devola and I left town that day.
+Violence like that wouldn't stop. It was going to happen again.<bt_wait>
+And again.<bt_wait>      And again.<bt_wait>      And again.<bt_wait>
+And it wouldn't stop with just one of us either.<bt_wait>
 
-I remember the moment our Resistance allies wounded her leg.
-I was furious. Beyond fury. I wanted to scream and cry and lose myself in it.
-But then she smiled, and all of that rage just...drifted away.<bt_wait>
-
-To think we have the same face, yet such different smiles.<bt_wait>
-
-One day, I realized how similar we were to the martyrs I'd seen in old records.
-That was when I decided we'd leave our town forever.
+So rather than let them kill us, we ran.
+I guess it was the greatest resistance I could muster.
 </page>
 
-*Fade-out
+...Desert Part 4
+*Show desert image D (wide desert area again)
 
-...Project Gestalt collapses
+<page>
+We lose the sun as dark clouds gather overhead.
+We continue our march.<bt_wait>
+
+A cold wind blasts us, stealing what little body heat we have left.
+I smell rain on the air.
+We continue our march.<bt_wait>
+
+Sometimes we hear animals howling in the distance.
+It makes us flinch every time.
+But we continue our march, because even this is better
+than suffering at the hands of our friends.
+</page>
+
+<page>
+Why are we persecuted so?<bt_wait> Why must we suffer?<bt_wait>
+I know we're the same model as the androids who doomed humanity,
+so I understand that part. At least a little, anyway.<bt_wait>

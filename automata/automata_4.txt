@@ -1,46 +1,69 @@
 Novel Game (80 x 11)
 □□□■□□□□■□□□□■□□□□■□□□□■□□□□■□□□□■□□□□■□□□□
-<BGM_BGM_M1070_S0060_N_start>
+<BGM_BGM_M1070_S0080_N_start>
 <page>
-I dive deeper into the records...<bt_wait>
-I can find no indication of the machines creating new cultures or values.
-They only imitate human behavior.<bt_wait>
-
-The strange thing is, if a unit fails, it fails in exactly the same way the next time.<bt_wait>
-For example, if a machine forms a dictatorship that eventually collapses,
-it won't try a new type of government—it just forms a new dictatorship.<bt_wait>
-Or if it plants crops and they die, it just tries the same thing again.<bt_wait>
-And again.<bt_wait> And again.<bt_wait> And again.<bt_wait>
-
-They keep performing the same behaviors. They don't ever LEARN.
-</page>
 
 
-<page>
-When it comes to combat, the machines show overwhelming adaptive behavior and
-evolutionary speed.<bt_wait>
 
-So why do they insist on imitating humanity?
-And more specifically, why do they imitate their failures?<bt_wait>
 
-It's almost as if the objective is <i>failure itself</i>.<bt_wait>
 
-I sense a change in the data. Some kind of movement.<bt_wait>
-I hone my perception and hold my breath.
+“I announce...to all...androids...”
+
+
+
+
 
 </page>
 
 
 <page>
-“I...”<bt_wait><BGM_BGM_M1070_S0060_N_0010>
+The words shimmer into focus. The voice grows clear in my mind.<bt_wait><BGM_BGM_M1070_S0080_N_0010>
+It is Adam—a machine made in the image of a man.<bt_wait>
 
-I hear something. A distant voice.<bt_wait>
+“We machine lifeforms have evolved,” he says. “We made war. Learned. Grew.
+And thus we gained a new consciousness.<bt_wait>
+Indeed, it is as if a new form of existence has been born.”
+</page>
 
-“I annou...”<bt_wait>
 
-“...all androids...”<bt_wait>
+<page>
+<i>Lies! Nothing but lies from mere machines!</i><bt_wait>
 
-There's something there. Something clearly intelligent.
+Adam laughs. “And yet you androids claim to be alive? How very odd.
+You are puppets who lack even your own free will.”
+
+<i>No! You're wrong!</i>
 
 </page>
-<BGM_BGM_M1070_S0060_N_end>
+
+
+<page>
+His words flow through me as though they were poured into my ear.
+
+“How am I wrong, boy?”<bt_wait>
+
+<i>I'm... We're...</i><bt_wait>
+                     
+“Perhaps you have a will after all,” he chuckles. “Perhaps you have desires.”
+
+</page>
+
+
+<page>
+“Now you see, boy! The true meaning of life...is hatred!”<bt_wait>
+
+<i>You're wrong.</i><bt_wait>
+
+“A vile hatred slumbers in the depths of your heart.”<bt_wait>
+
+<i>You're WRONG!</i><bt_wait>
+
+“The more you try to hide it, the more that darkness grows.”<bt_wait>
+
+<i>Wrong!<bt_wait> Wrong!<bt_wait> Wrong!<bt_wait> Wrong!</i>
+</page>
+<BGM_BGM_M1070_S0080_N_end>
+
+
+
+

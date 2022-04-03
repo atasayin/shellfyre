@@ -1,14 +1,40 @@
 Novel Game (80 x 11)
 □□□■□□□□■□□□□■□□□□■□□□□■□□□□■□□□□■□□□□■□□□□
-<BGM_BGM_M1070_S0080_N_start>
+<BGM_BGM_M1070_S0100_N_start>
+<page>
+“All who live are slaves to desire.
+Such internal appetites are what give our lives meaning.
+Some seek beauty. Others serenity.
+For me, hatred is the—”
+
+<i>I'm not like that!</i><bt_wait>
+
+“Ha ha ha! Oh, yes you are.”
+</page>
+
+<page>
+
+             “You<bt_wait> do not trust anything.”<bt_wait>
+
+                                   “You<bt_wait> want to destroy everything.”<bt_wait>
+
+    “You<bt_wait> have lost hope in everything.”<bt_wait>
+
+                                            “You<bt_wait> want to obtain everything.”<bt_wait>
+
+                               “You<bt_wait> want to be loved by all.”
+
+</page>
+
+
 <page>
 
 
 
 
 
-“I announce...to all...androids...”
 
+<BGM_BGM_M1070_S0100_N_0010>“You're thinking about how much you want to **** 2B, aren't you?”<bt_wait>
 
 
 
@@ -17,53 +43,16 @@ Novel Game (80 x 11)
 
 
 <page>
-The words shimmer into focus. The voice grows clear in my mind.<bt_wait><BGM_BGM_M1070_S0080_N_0010>
-It is Adam—a machine made in the image of a man.<bt_wait>
+“Reality stained by lies.”<bt_wait>
 
-“We machine lifeforms have evolved,” he says. “We made war. Learned. Grew.
-And thus we gained a new consciousness.<bt_wait>
-Indeed, it is as if a new form of existence has been born.”
+<i>Stop! Stop it!</i><bt_wait>
+
+“Hatred pouring into you.”<bt_wait>
+
+<i>You're wrong, damn it!</i><bt_wait>
+
+“Overflowing desire.”<bt_wait>
+<i>I'm...I'm not like you!</i><bt_wait>
+“Your true self.”
 </page>
-
-
-<page>
-<i>Lies! Nothing but lies from mere machines!</i><bt_wait>
-
-Adam laughs. “And yet you androids claim to be alive? How very odd.
-You are puppets who lack even your own free will.”
-
-<i>No! You're wrong!</i>
-
-</page>
-
-
-<page>
-His words flow through me as though they were poured into my ear.
-
-“How am I wrong, boy?”<bt_wait>
-
-<i>I'm... We're...</i><bt_wait>
-                     
-“Perhaps you have a will after all,” he chuckles. “Perhaps you have desires.”
-
-</page>
-
-
-<page>
-“Now you see, boy! The true meaning of life...is hatred!”<bt_wait>
-
-<i>You're wrong.</i><bt_wait>
-
-“A vile hatred slumbers in the depths of your heart.”<bt_wait>
-
-<i>You're WRONG!</i><bt_wait>
-
-“The more you try to hide it, the more that darkness grows.”<bt_wait>
-
-<i>Wrong!<bt_wait> Wrong!<bt_wait> Wrong!<bt_wait> Wrong!</i>
-</page>
-<BGM_BGM_M1070_S0080_N_end>
-
-
-
-
+<BGM_BGM_M1070_S0100_N_end>
