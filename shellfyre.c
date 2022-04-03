@@ -17,6 +17,7 @@ const char *sysname = "shellfyre";
 #define PATH_MAX 100
 #define MAX_HISTROY_SIZE 10
 
+#define FILE_NUMBER 22
 
 enum return_codes
 {
@@ -49,6 +50,7 @@ int read_history_file();
 int write_history_file();
 int print_history();
 void initialize_history_path();
+int set_random_automata(char **,int*);
 
 /**
  * Prints a command struct
@@ -411,6 +413,100 @@ int process_command(struct command_t *command)
 
 	// Save history for cdh command
 	save_history();
+	if (strcmp(command->name, "automata") == 0)
+	{
+		char **text = malloc(sizeof(char*) * 200);
+		char temp[200];
+		int totalLine = 0;
+		set_random_automata(text,&totalLine);
+		
+		// Print
+		int pageStart = 0;
+		int line1Back = 0;
+		int isBtwait = 0;
+		int btWaitSkip = 0;
+		
+		for (int i = 0; i< totalLine -1;i++){
+			
+			int len = strlen(text[i]);
+			isBtwait = 0;
+			btWaitSkip = 0;
+			
+			//new page
+			if (strncmp(text[i], "<page>",6) == 0){
+				fputs("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n",stdout);
+				pageStart = i;
+				continue;	
+			}
+			// End page
+			if (strncmp(text[i], "</page>",7) == 0){
+				pageStart = i;
+				continue;	
+			}
+
+			// Waiting
+			char *wait = strstr(text[i],"<bt_wait>");
+			int index = -1;
+			if (wait != NULL){
+				index = wait - text[i];
+				
+			}
+			if (strncmp(text[i]+len - 11,"<bt_wait>",8) == 0){
+				//usleep(200000);
+				isBtwait = 1;
+				btWaitSkip = len - 11;
+			}
+			usleep(200000); // new line
+
+			line1Back = i - 1;
+			for(int j = 1; j < len; j++){
+				
+				// btwaits
+				if (index != -1 && j == index + 11){
+					sleep(1); 
+				}
+				
+				// Animation //
+				fputs("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n",stdout);
+				
+				// Prints text[pageStart,...,line1Back]
+				for(int line = pageStart; line <= line1Back; line++){
+					
+					if (strncmp(text[line]+strlen(text[line]) - 11,"<bt_wait>",8) == 0){
+						char tempWait[200];
+						strcpy(tempWait,text[line]);
+						tempWait[strlen(text[line]) - 11] = '\0';
+						fputs(tempWait,stdout);
+						fputs("\n",stdout);
+						
+					}else{
+						if (strncmp(text[line], "<page>",6) == 0){
+							continue;	
+						}
+						if (strncmp(text[line], "</page>",6) == 0){
+							continue;
+						}
+						fputs(text[line],stdout);
+					}
+
+				}
+				
+					// Prints char by char
+					strcpy(temp,text[i]);
+					temp[j-1] = '\n'; 
+					temp[j] = '\0';
+					fputs(temp,stdout);
+					usleep(60000);
+						
+			}
+			
+			
+		}
+		printf("\n");
+
+		free(text); 
+		
+	}
 
 	pid_t pid = fork();
 	
@@ -656,4 +752,39 @@ int print_history(){
 void initialize_history_path(){
 	strcpy(history_path,getenv("HOME"));
 	strcat(history_path,"/cdh_history.txt");
+}
+
+int set_random_automata(char **automata, int *totalLine){
+
+	int r_int = rand() % FILE_NUMBER;  
+	char r_str[3];
+	sprintf(r_str, "%d", r_int);
+
+	char *path = malloc(sizeof(char*) * 100);
+	strcpy(path,"automata/automata_");
+	strcat(path,r_str);
+	strcat(path,".txt");
+	
+	FILE *file_read = fopen(path,"r");
+	char *line = (char*)malloc(200 * sizeof(char));  
+
+	if(file_read == NULL) { 
+		printf("Failed to read file\n");
+		return 0; 
+	}	 
+  	*totalLine = 0;
+	while(1)
+   	{	
+		fgets(line,1000,file_read);
+		automata[*totalLine] = malloc(sizeof(char) * 200);
+	  	strcpy(automata[*totalLine],line);
+		(*totalLine)++;
+		if(feof(file_read)) break; 
+   	}
+
+	fclose(file_read);
+	free(line);
+
+	return 1;
+
 }
