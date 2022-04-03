@@ -6,9 +6,17 @@
 #include <string.h>
 #include <stdbool.h>
 #include <errno.h>
+
+#include <fcntl.h>
+#include <sys/shm.h>
+#include <sys/stat.h>
+#include <sys/mman.h>
 const char *sysname = "shellfyre";
 
 #define MAX_SIZE 20
+#define PATH_MAX 100
+#define MAX_HISTROY_SIZE 10
+
 
 enum return_codes
 {
@@ -27,6 +35,20 @@ struct command_t
 	char *redirects[3];		// in/out redirection
 	struct command_t *next; // for piping
 };
+
+// cdh global variables
+const int SIZE = 32;
+const char *name = "OS";
+char history[MAX_HISTROY_SIZE + 1][256];
+char history_path[256];
+int saveDir;
+
+// cdh helper functions
+int save_history();
+int read_history_file();
+int write_history_file();
+int print_history();
+void initialize_history_path();
 
 /**
  * Prints a command struct
@@ -309,7 +331,7 @@ int prompt(struct command_t *command)
 
 	parse_command(buf, command);
 
-	// print_command(command); // DEBUG: uncomment for debugging
+	//print_command(command); // DEBUG: uncomment for debugging
 
 	// restore the old settings
 	tcsetattr(STDIN_FILENO, TCSANOW, &backup_termios);
@@ -320,6 +342,8 @@ int process_command(struct command_t *command);
 
 int main()
 {
+	// Gets the HOME path to save cdh_history.txt file
+	initialize_history_path();
 	while (1)
 	{
 		struct command_t *command = malloc(sizeof(struct command_t));
@@ -349,15 +373,16 @@ int process_command(struct command_t *command)
 
 	if (strcmp(command->name, "exit") == 0)
 		return EXIT;
-
+	
 	if (strcmp(command->name, "cd") == 0)
 	{
 		if (command->arg_count > 0)
 		{
 			r = chdir(command->args[0]);
 			if (r == -1)
-				printf("-%s: %s: %s\n", sysname, command->name, strerror(errno));
+				printf("-%s: %s: %s\n", sysname, command->name, strerror(errno));	
 			return SUCCESS;
+		
 		}
 	}
 
@@ -384,11 +409,63 @@ int process_command(struct command_t *command)
 		return SUCCESS;
 	}
 
+	// Save history for cdh command
+	save_history();
 
 	pid_t pid = fork();
-
+	
 	if (pid == 0) // child
-	{
+	{	
+		int shm_fd;
+		void *ptr;
+
+		// create the shared memory segment 
+		shm_fd = shm_open(name, O_CREAT | O_RDWR, 0666);
+
+		// configure the size of the shared memory segment 
+		ftruncate(shm_fd,SIZE);
+
+		// now map the shared memory segment in the address space of the process 
+		ptr = mmap(0,SIZE, PROT_READ | PROT_WRITE, MAP_SHARED, shm_fd, 0);
+		if (ptr == MAP_FAILED) {
+			printf("Map failed\n");
+			return -1;
+		}
+
+		// Checks if cdh is called
+		sprintf(ptr,"%d",-1);
+
+		/* cdh command */
+		if (strcmp(command->name, "cdh") == 0)
+		{	
+			// No arg cdh 
+			if (command->arg_count == 0){
+				char dirLetter;
+				int letterIndex;
+				print_history(saveDir);
+				printf("Select directory by letter: ");
+				scanf("%c",&dirLetter);
+
+				letterIndex = dirLetter - 'a';
+
+				// Writes the index of wanted dir to shared memory
+				sprintf(ptr,"%d",letterIndex);
+				
+				return SUCCESS;
+
+			}else{
+
+				// Removes history file with first argument 'remove'
+				if (strcmp(command->args[0],"-r") == 0){
+					remove(history_path);
+					printf("cdh: History file removed\n");
+				return SUCCESS;
+			}
+
+			}
+		
+		}
+		
 		// increase args size by 2
 		command->args = (char **)realloc(
 			command->args, sizeof(char *) * (command->arg_count += 2));
@@ -405,8 +482,9 @@ int process_command(struct command_t *command)
 		/// TODO: do your own exec with path resolving using execv()
     	char path[MAX_SIZE] = "/bin/";	
 		strcat(path,command->name);
-	
+		
     	if (command->arg_count <= 1){ printf("Invalid input!\n "); return 0; }
+		
       	execv(path, command->args);
       	exit(0);
 
@@ -417,10 +495,165 @@ int process_command(struct command_t *command)
 		
 		if (!command->background){ 
 			wait(NULL);
+			int read_cdh;
+		
+			int shm_fd;
+			void *ptr;
+		
+			// open the shared memory segment 
+			shm_fd = shm_open(name, O_RDONLY, 0666);
+			if (shm_fd == -1) {
+				printf("shared memory failed\n");
+				exit(-1);
+			}
+
+			// now map the shared memory segment in the address space of the process 
+			ptr = mmap(0,SIZE, PROT_READ, MAP_SHARED, shm_fd, 0);
+			if (ptr == MAP_FAILED) {
+				printf("Map failed\n");
+				exit(-1);
+			}
+			read_cdh = atoi(ptr);
+
+			// Remove shared memory
+			if (shm_unlink(name) == -1) {
+			printf("Error removing %s\n",name);
+			exit(-1);
+	}
+
+			// Go to wanted dir by cd command
+			if (read_cdh != -1){
+				int letterIndex = read_cdh;
+
+				char goPath[200];
+				strcpy(goPath,history[letterIndex]);
+				
+				if (saveDir -1 !=letterIndex)
+					goPath[strlen(goPath) - 1] = '\0';
+
+				// cd command 
+				r = chdir(goPath);
+				if (r == -1)
+					printf("-%s: %s: %s\n", sysname, command->name, strerror(errno));	
+			}
 		}
+		
 		return SUCCESS;
 	}
 
 	printf("-%s: %s: command not found\n", sysname, command->name);
 	return UNKNOWN;
+}
+
+
+/* Helper Functions */
+
+/**
+ * Main 'cdh' command function which reads, modifies and writes
+ * the recent directories
+ * @return          [success]
+ */
+int save_history(){
+	saveDir = 0;
+
+	char currentDic[PATH_MAX];
+	getcwd(currentDic, sizeof(currentDic));
+	 
+	// Read history file and get # of saved dirs 
+	if (!read_history_file()){
+		printf("cdh: History file created\n");
+	}
+	
+	// Add current dic to history variable 
+	if (saveDir >= MAX_HISTROY_SIZE ){
+		// History is full
+		for(int i = 0; i < saveDir - 1; i++){
+			strcpy(history[i],history[i + 1]);
+		}
+		strcpy(history[saveDir-1],currentDic);
+		
+	}else{
+		// History is not full
+	  	strcpy(history[saveDir],currentDic);
+		saveDir++;
+	}
+	
+	if (!write_history_file()){
+		printf("Failed to write History file\n");
+		return 0;
+	}
+	
+	return 0;
+	
+}
+
+/**
+ * Reads from HOME/cdh_history.txt and save it to history variable
+ * @return            [success]
+ */
+int read_history_file(){
+		
+	FILE *file_read = fopen(history_path,"r");
+	char line[PATH_MAX];
+
+	if(file_read == NULL) { 
+		// creates history file
+		FILE *file_write = fopen(history_path,"w");
+		fclose(file_write);
+		return 0; 
+	}	 
+  
+	while(1)
+   	{
+		fgets(line,PATH_MAX,file_read);
+		if(feof(file_read)) break; 	
+		// Save to variable history from file and get # el
+	  	strcpy(history[saveDir],line);
+	  	saveDir++;	
+   	}
+	fclose(file_read);
+	
+	return 1;
+}
+/**
+ * Writes to HOME/cdh_history.txt from history variable
+ * @return            [success]
+ */
+int write_history_file(){
+	
+	FILE *file_write = fopen(history_path,"w");
+
+	if(file_write == NULL) { return 0; }	 
+  
+	for(int i = 0; i < saveDir -1; i++)
+   	{
+		fprintf(file_write, "%s", history[i]);
+   	}
+	fprintf(file_write, "%s\n", history[saveDir - 1]);
+	fclose(file_write);
+	
+	return 1;
+}
+/**
+ * Prints the history 
+ * @return            [success]
+ */
+int print_history(){
+	
+	char charNumber = 'a';
+	
+	for(int i = 0; i < saveDir; i++){
+		printf("%c)  %s",charNumber+i,history[i]);
+	}
+	printf("\n");
+	return 1;
+
+}
+
+/**
+ * Finds and saves the HOME path
+ */
+void initialize_history_path(){
+	strcpy(history_path,getenv("HOME"));
+	strcat(history_path,"/cdh_history.txt");
 }
