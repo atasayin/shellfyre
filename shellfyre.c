@@ -28,7 +28,7 @@ const char *sysname = "shellfyre";
 #define PATH_MAX 100
 #define MAX_HISTROY_SIZE 10
 
-#define FILE_NUMBER 22
+#define FILE_NUMBER 21
 
 enum return_codes
 {
