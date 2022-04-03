@@ -11,7 +11,6 @@
 #include <sys/shm.h>
 #include <sys/stat.h>
 #include <sys/mman.h>
-
 const char *sysname = "shellfyre";
 
 #define MAX_SIZE 20
@@ -346,7 +345,6 @@ int prompt(struct command_t *command)
 int process_command(struct command_t *command);
 
 void filesearch(char* argument1,char* argument2,char* path){
-	printf("Argument1 %s,argument2 %s, path is %s\n",argument1,argument2,path);
 	DIR *d;
 	DIR *d2;
 	struct dirent *dir;
@@ -379,7 +377,7 @@ void filesearch(char* argument1,char* argument2,char* path){
 			}
 			closedir(d);
 		}
-		else{
+		if(argument2== NULL){
 			while((dir=readdir(d)) != NULL){
 				if(strstr(dir->d_name,argument1)!= NULL){
 					printf("%s \n",dir->d_name);
@@ -392,7 +390,6 @@ void filesearch(char* argument1,char* argument2,char* path){
 void take(char* arguments){
 	char *c=strtok(arguments,"/");
 	while(c != NULL){
-		printf("%s \n",c);
 		mkdir(c,0755);
 		chdir(c);
 		c=strtok(NULL,"/");
@@ -464,15 +461,13 @@ int process_command(struct command_t *command)
 	}
 
 	// TODO: Implement your custom commands here
-	if(strcmp(command->name,"filesearch") == 0){
-		printf("%s %s %s %s\n",command->name,command->args[0],command->args[1],command->args[2]);
+	if(strcmp(command->name,"filesearch") == 0 && (command->arg_count == 2 ||command->arg_count == 1)){
 		filesearch(command->args[0],command->args[1],"./");
 	}
-	if(strcmp(command->name,"take") == 0){
-		printf("take %s \n",command->args[0]);
+	if(strcmp(command->name,"take") == 0 && command->arg_count == 1){
 		take(command->args[0]);
 	}
-	if(strcmp(command->name,"factors")== 0){
+	if(strcmp(command->name,"factors")== 0 && command->arg_count == 1){
 		factors(atoi(command->args[0]));
 	}
 
