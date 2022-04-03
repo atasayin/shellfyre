@@ -533,7 +533,7 @@ int process_command(struct command_t *command)
 				
 			}
 			if (strncmp(text[i]+len - 11,"<bt_wait>",8) == 0){
-				//usleep(200000);
+				usleep(200000);
 				isBtwait = 1;
 				btWaitSkip = len - 11;
 			}
