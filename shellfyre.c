@@ -633,7 +633,7 @@ int process_command(struct command_t *command)
 				// Writes the index of wanted dir to shared memory
 				sprintf(ptr,"%d",letterIndex);
 				
-				return SUCCESS;
+				exit(0);
 
 			}else{
 
@@ -641,7 +641,7 @@ int process_command(struct command_t *command)
 				if (strcmp(command->args[0],"-r") == 0){
 					remove(history_path);
 					printf("cdh: History file removed\n");
-				return SUCCESS;
+					exit(0);
 			}
 
 			}

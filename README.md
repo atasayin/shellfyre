@@ -2,10 +2,14 @@
 
 Comp304 project which similates an Unix-style operating system shell.
 
-## Compile 
+## Compile & Run
 
 ```bash
-make
+gcc shellfyre.c -o shellfyre
+```
+
+```bash
+./shellfyre
 ```
 
 ## Custom Commands
