@@ -1,3 +1,14 @@
+/**
+ * @file shellfyre.c
+ * @author Ata Sayın(ID:64437), Sinan Keser (ID:76982)
+ * @brief Comp304 project which similates an Unix-style 
+ * operating system shell.
+ * @date 2022-04-03
+ * 
+ * @copyright Copyright (c) 2022
+ * 
+ */
+
 #include <unistd.h>
 #include <sys/wait.h>
 #include <stdio.h>
