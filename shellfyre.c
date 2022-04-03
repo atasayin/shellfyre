@@ -494,6 +494,12 @@ int process_command(struct command_t *command)
 			}
 			read_cdh = atoi(ptr);
 
+			// Remove shared memory
+			if (shm_unlink(name) == -1) {
+			printf("Error removing %s\n",name);
+			exit(-1);
+	}
+
 			// Go to wanted dir by cd command
 			if (read_cdh != -1){
 				int letterIndex = read_cdh;
